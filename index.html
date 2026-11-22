@@ -28,8 +28,7 @@
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 html,body{margin:0}
-body{background:var(--mask);color:var(--silk);font:400 17px/1.6 var(--display);font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  background-image:radial-gradient(circle at 1px 1px,rgba(236,231,218,.045) 1px,transparent 0);background-size:24px 24px}
+body{background:var(--mask);color:var(--silk);font:400 17px/1.6 var(--display);font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
 .wrap{max-width:1280px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
@@ -65,30 +64,17 @@ h1 span:last-child{padding-left:.42em;color:var(--mask);-webkit-text-stroke:2px 
 .btn-line{border:1px solid var(--line-2);color:var(--silk)}
 .btn-line:hover{border-color:var(--gold);color:var(--gold)}
 .btn svg{width:18px;height:18px;fill:currentColor;flex:none}
-.wafer-wrap{position:relative;width:min(620px,100%);aspect-ratio:1;justify-self:end;margin-right:-6%;will-change:transform,opacity}
+.wafer-wrap{position:relative;width:min(620px,100%);aspect-ratio:1;justify-self:end;margin-right:-6%}
 #wafer{width:100%;height:100%;display:block}
 .sheen{position:absolute;inset:2%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.55;
   background:conic-gradient(from 0deg,transparent 0 8%,rgba(255,255,255,.16) 14%,transparent 22% 40%,rgba(120,210,255,.14) 48%,transparent 56% 70%,rgba(255,200,120,.16) 78%,transparent 86%)}
 @media (prefers-reduced-motion:no-preference){.sheen{animation:spin 48s linear infinite}}
 @keyframes spin{to{transform:rotate(1turn)}}
-.ann{position:absolute;font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--silk-dim);white-space:nowrap}
-.ann::before{content:"";position:absolute;background:var(--silk-dim);opacity:.6}
-.ann-size{top:4%;left:-2%}
-.ann-size::before{width:28px;height:1px;left:calc(100% + 8px);top:50%}
-.ann-die{left:var(--dx,60%);top:var(--dy,40%);transform:translate(18px,-50%);color:var(--gold)}
-.ann-die::before{width:14px;height:1px;right:calc(100% + 4px);top:50%;background:var(--gold)}
-.ann-notch{bottom:-1%;left:50%;transform:translateX(-50%)}
-.fid{position:absolute;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--copper);opacity:.7}
-.fid::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--copper)}
-.fid-a{top:calc(env(safe-area-inset-top,0px) + 86px);left:max(20px,env(safe-area-inset-left,0px))}
-.fid-b{bottom:28px;right:max(20px,env(safe-area-inset-right,0px))}
 @media (max-width:860px){
   .hero{padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
   .hero-grid{grid-template-columns:minmax(0,1fr)}
   .wafer-wrap{order:-1;width:min(420px,86%);justify-self:center;margin:0 0 8px}
-  .ann-size{left:0}.ann-notch,.ann-die{display:none}
   h1 span:last-child{padding-left:0}
-  .fid-a{display:none}
 }
 
 /* trace band */
@@ -120,7 +106,7 @@ h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:c
   background:repeating-linear-gradient(180deg,var(--gold) 0 5px,transparent 5px 15px)}
 .pkg::before{left:-12px;border-radius:2px 0 0 2px}.pkg::after{right:-12px;border-radius:0 2px 2px 0}
 .part:hover .pkg,.part:focus-within .pkg{border-color:rgba(214,168,78,.55)}
-.part:hover .pkg::before,.part:hover .pkg::after,.part:focus-within .pkg::before,.part:focus-within .pkg::after{opacity:1;filter:drop-shadow(0 0 6px rgba(214,168,78,.45))}
+.part:hover .pkg::before,.part:hover .pkg::after,.part:focus-within .pkg::before,.part:focus-within .pkg::after{opacity:1}
 .pkg-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
 .pkg-top .des{display:inline-flex;align-items:center;gap:8px}
 .pkg-top .des::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid var(--gold)}
@@ -130,6 +116,7 @@ h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:c
 .part-body{padding:22px 12px 0}
 .field{color:var(--gold);margin:0 0 10px}
 .part h3{margin:0 0 12px;font-weight:780;font-variation-settings:"wdth" 118;font-size:clamp(24px,2.3vw,32px);line-height:1.02;letter-spacing:-.005em;text-wrap:balance}
+.part.sm h3{font-size:clamp(22px,1.8vw,26px)}
 .part p{margin:0 0 18px;color:var(--silk);max-width:60ch;font-size:16px}
 .specs{display:grid;grid-template-columns:auto minmax(0,1fr);margin:0;border-top:1px solid var(--line)}
 .specs dt,.specs dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line)}
@@ -148,22 +135,12 @@ h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:c
 .board{position:relative;aspect-ratio:5/4;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;background:#0d110f}
 .board canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
-/* connector / contact */
-.conn{border:1px solid var(--line-2);border-radius:6px;background:var(--mask-2);padding:clamp(24px,4vw,48px);display:grid;gap:28px}
-.conn-pins{display:flex;gap:10px}
-.conn-pins i{width:22px;height:10px;background:var(--gold);border-radius:1px;opacity:.85}
-.big-link{display:inline-flex;align-items:center;gap:.35em;font-weight:850;font-variation-settings:"wdth" 125;font-size:clamp(30px,6.4vw,92px);line-height:.95;letter-spacing:-.01em;text-transform:uppercase;text-decoration:none;overflow-wrap:anywhere;transition:color .15s}
-.big-link:hover{color:var(--gold)}
-.big-link svg{width:.62em;height:.62em;flex:none;fill:currentColor}
 footer{padding-block:40px calc(env(safe-area-inset-bottom,0px) + 40px)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
-footer .fid{position:relative;display:inline-block;vertical-align:middle;margin-right:10px}
+footer{border-top:1px solid var(--line);color:var(--silk-dim)}
+footer .gh{color:var(--silk);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;transition:color .15s}
+footer .gh:hover{color:var(--gold)}
 
-/* reveal */
-@media (prefers-reduced-motion:no-preference){
-  .js .rv{opacity:.001;transform:translateY(14px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
-  .js .rv.in{opacity:1;transform:none}
-}
 </style>
 </head>
 <body>
@@ -178,101 +155,84 @@ footer .fid{position:relative;display:inline-block;vertical-align:middle;margin-
     <nav aria-label="Sections">
       <a href="#work">Work</a>
       <a href="#brewing">Brewing</a>
-      <a href="#contact">Contact</a>
+      <a href="https://github.com/raazifaisal" rel="me">GitHub</a>
     </nav>
-    <span class="silk rev" aria-hidden="true">Rev B · 2026</span>
   </div>
 </header>
 
 <main id="main">
   <section class="hero" id="top" aria-labelledby="name">
-    <span class="fid fid-a" aria-hidden="true"></span>
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="silk">U1 · Software engineer · Bangalore 12.97°N 77.59°E</p>
         <h1 id="name"><span>Raazi</span><span>Faisal</span></h1>
-        <p class="lede">I build AI products end to end, and I care about the <em>compilers, GPUs and systems</em> underneath them.</p>
-        <div class="cta">
-          <a class="btn btn-gold" href="#work">See the work</a>
-          <a class="btn btn-line" href="https://github.com/raazifaisal" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        </div>
+        <p class="lede">Software engineer in Bangalore. I build AI products end to end, and I care about the compilers, GPUs and systems underneath them.</p>
       </div>
       <div class="wafer-wrap" id="waferWrap" aria-hidden="true">
         <canvas id="wafer"></canvas>
         <div class="sheen"></div>
-        <span class="ann ann-size">300 mm wafer</span>
-        <span class="ann ann-die" id="annDie">Die RF-01</span>
-        <span class="ann ann-notch">Notch</span>
       </div>
     </div>
     <svg class="band" id="band" aria-hidden="true"></svg>
-    <span class="fid fid-b" aria-hidden="true"></span>
   </section>
 
   <section class="sec" id="work" aria-labelledby="h-work">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><span class="silk">U3–U7 · Populated</span><h2 id="h-work">Selected work</h2></div>
-        <p>Each part's die window is drawn in the language of its field.</p>
+        <h2 id="h-work">Selected work</h2>
       </div>
       <div class="parts">
         <article class="part rv">
           <div class="pkg">
-            <div class="pkg-top"><span class="silk des">U3</span><span class="silk">RF-IR01</span></div>
+            <div class="pkg-top"><span class="silk des">U3</span><span class="silk">Information retrieval</span></div>
             <div class="die-win"><canvas data-viz="er" aria-hidden="true"></canvas></div>
           </div>
           <div class="part-body">
-            <p class="silk field">Information retrieval</p>
-            <h3>One business, a thousand spellings</h3>
+            <h3>Entity resolution for business records</h3>
             <p>An entity-resolution system that decides which messy business records describe the same company. Dense and lexical retrieval propose candidates, a gradient-boosted pruner and a two-stage ranker narrow them down, calibration sets the threshold, and a small language model gets the final veto.</p>
             <dl class="specs"><dt>Result</dt><dd>0.985 macro-F0.5 on a competition leaderboard</dd><dt>Stack</dt><dd>Bi-encoders · TF-IDF · LightGBM · XGBoost · LoRA verifier</dd></dl>
           </div>
         </article>
         <article class="part rv">
           <div class="pkg">
-            <div class="pkg-top"><span class="silk des">U4</span><span class="silk">RF-EO03</span></div>
+            <div class="pkg-top"><span class="silk des">U4</span><span class="silk">Earth observation</span></div>
             <div class="die-win"><canvas data-viz="sar" aria-hidden="true"></canvas></div>
           </div>
           <div class="part-body">
-            <p class="silk field">Earth observation</p>
-            <h3>What the satellite saw</h3>
+            <h3>Disaster evidence from satellite radar</h3>
             <p>Independent evidence of what a disaster did to industrial sites. Radar backscatter from Sentinel-1 and NISAR and night-time lights from VIIRS feed a deterministic engine, and every report is canonically hashed so anyone can check it later.</p>
             <dl class="specs"><dt>Sensors</dt><dd>Sentinel-1 · NISAR · VIIRS</dd><dt>Stack</dt><dd>Python · Earth Engine · Cloud Run · RFC 8785 hashing</dd></dl>
           </div>
         </article>
         <article class="part sm rv">
           <div class="pkg">
-            <div class="pkg-top"><span class="silk des">U5</span><span class="silk">RF-LM02</span></div>
+            <div class="pkg-top"><span class="silk des">U5</span><span class="silk">Language-model research</span></div>
             <div class="die-win"><canvas data-viz="mem" aria-hidden="true"></canvas></div>
           </div>
           <div class="part-body">
-            <p class="silk field">Language-model research</p>
-            <h3>Models that check instead of remember</h3>
-            <p>Do small language models that answer from a knowledge base follow an edit, keep a deleted fact deleted, and reject a corrupted record? Pre-registered hypotheses and LoRA fine-tunes of 0.5B and 1.5B models, run across Kaggle, an A100 and Kubernetes jobs.</p>
+            <h3>Edited knowledge in small language models</h3>
+            <p>Research on small language models that answer from a knowledge base: whether they follow an edit, keep a deleted fact deleted, and reject a corrupted record. Pre-registered hypotheses and LoRA fine-tunes of 0.5B and 1.5B models, run across Kaggle, an A100 and Kubernetes jobs.</p>
             <dl class="specs"><dt>Stack</dt><dd>PyTorch · LoRA · Qwen2.5 · Kubernetes</dd></dl>
           </div>
         </article>
         <article class="part sm rv">
           <div class="pkg">
-            <div class="pkg-top"><span class="silk des">U6</span><span class="silk">RF-TS04</span></div>
+            <div class="pkg-top"><span class="silk des">U6</span><span class="silk">Clinical time series</span></div>
             <div class="die-win"><canvas data-viz="glu" aria-hidden="true"></canvas></div>
           </div>
           <div class="part-body">
-            <p class="silk field">Clinical time series</p>
-            <h3>Glucose, with error bars</h3>
-            <p>A Temporal Fusion Transformer that forecasts blood glucose as a range instead of a single guess, using quantile outputs, paired with a rule-based risk classifier and served behind an API.</p>
+            <h3>Glucose forecasting with uncertainty</h3>
+            <p>A Temporal Fusion Transformer that forecasts blood glucose with quantile outputs, giving a likely range for each step ahead, paired with a rule-based risk classifier and served behind an API.</p>
             <dl class="specs"><dt>Stack</dt><dd>PyTorch · TFT · Flask</dd></dl>
           </div>
         </article>
         <article class="part sm rv">
           <div class="pkg">
-            <div class="pkg-top"><span class="silk des">U7</span><span class="silk">RF-PC05</span></div>
+            <div class="pkg-top"><span class="silk des">U7</span><span class="silk">Physiological computing</span></div>
             <div class="die-win"><canvas data-viz="ppg" aria-hidden="true"></canvas></div>
           </div>
           <div class="part-body">
-            <p class="silk field">Physiological computing</p>
-            <h3>Explanations that read the room</h3>
-            <p>An assistant that adapts how it explains things to the person reading. A watch streams heart rate and HRV to the phone every two seconds, a stress score is computed on the device, and a retrieval-augmented model shapes its answers to match.</p>
+            <h3>Explanations adapted to heart rate</h3>
+            <p>An assistant that adjusts how it explains things to the reader’s state. A watch streams heart rate and HRV to the phone every two seconds, a stress score is computed on the device, and a retrieval-augmented model shapes its answers to match.</p>
             <dl class="specs"><dt>Stack</dt><dd>Swift · HealthKit · watchOS · RAG</dd></dl>
           </div>
         </article>
@@ -283,12 +243,11 @@ footer .fid{position:relative;display:inline-block;vertical-align:middle;margin-
   <section class="sec" id="brewing" aria-labelledby="h-brew">
     <div class="wrap">
       <div class="sec-head rv">
-        <div><span class="silk">U8–U10 · DNP</span><h2 id="h-brew">Great stuff brewing</h2></div>
-        <p>DNP means "do not populate": the footprint is on the board, the part isn't fitted yet.</p>
+        <h2 id="h-brew">Great stuff brewing</h2>
       </div>
       <div class="brew-grid">
         <div class="brew-copy rv">
-          <p class="sub">The footprints are laid out and the paste is going down. What goes in them is still in the oven.</p>
+          <p class="sub">Work in progress. On a circuit board, DNP ("do not populate") marks a footprint whose part isn’t fitted yet.</p>
           <div class="scope">
             <div class="scope-top"><span class="silk">Reflow profile · SAC305</span><span class="silk" id="zone">Stencil print</span></div>
             <canvas id="profile" aria-hidden="true"></canvas>
@@ -300,23 +259,12 @@ footer .fid{position:relative;display:inline-block;vertical-align:middle;margin-
     </div>
   </section>
 
-  <section class="sec" id="contact" aria-labelledby="h-contact">
-    <div class="wrap">
-      <div class="conn rv">
-        <div class="sec-head" style="margin:0;border:0;padding:0">
-          <div><span class="silk">J1 · Connector</span><h2 id="h-contact">Find me</h2></div>
-          <div class="conn-pins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        </div>
-        <a class="big-link" href="https://github.com/raazifaisal" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>raazifaisal</a>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span class="silk"><span class="fid" aria-hidden="true"></span>Raazi Faisal · Bangalore · 2026</span>
-    <span class="silk">Rev B · Designed on an M4</span>
+    <span>Raazi Faisal, Bangalore</span>
+    <a class="gh" href="https://github.com/raazifaisal" rel="me">github.com/raazifaisal</a>
   </div>
 </footer>
 
@@ -330,7 +278,7 @@ const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 const C = { ink: "#ece7da", muted: "#a7a296", dim: "#5d615a", rule: "#262b27", gold: "#d6a84e", led: "#ffb547", copper: "#c8743f" };
 
 /* ---------- wafer ---------- */
-const wrap = document.getElementById("waferWrap"), cv = document.getElementById("wafer"), ann = document.getElementById("annDie");
+const wrap = document.getElementById("waferWrap"), cv = document.getElementById("wafer");
 function drawWafer(){
   const css = wrap.clientWidth; if (!css) return;
   const dpr = Math.min(2, window.devicePixelRatio || 1), S = Math.round(css * dpr);
@@ -366,7 +314,6 @@ function drawWafer(){
   g.globalAlpha = 1; g.restore();
   if (best) {
     g.lineWidth = 2.2 * dpr; g.strokeStyle = C.gold; g.strokeRect(best.x - 1.5 * dpr, best.y - 1.5 * dpr, dw + 3 * dpr, dh + 3 * dpr);
-    ann.style.setProperty("--dx", ((best.x + dw) / S * 100) + "%"); ann.style.setProperty("--dy", ((best.y + dh / 2) / S * 100) + "%");
   }
   g.lineWidth = 1.5 * dpr; g.strokeStyle = "rgba(255,255,255,.12)"; g.beginPath(); g.arc(c, c, R, 0, Math.PI * 2); g.stroke();
   g.globalCompositeOperation = "destination-out"; g.beginPath(); g.arc(c, c + R, R * 0.028, 0, Math.PI * 2); g.fill(); g.globalCompositeOperation = "source-over";
@@ -608,15 +555,6 @@ function drawBoard(g, w, h, t, st){
 animate(document.getElementById("profile"), drawProfile, { still: 7600 });
 animate(document.getElementById("board"), drawBoard, { still: 7600 });
 
-/* ---------- reveal + wafer scroll ---------- */
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
-document.querySelectorAll(".rv").forEach(el => io.observe(el));
-let ticking = false;
-addEventListener("scroll", () => {
-  if (ticking || reduce) return; ticking = true;
-  requestAnimationFrame(() => { const h = document.querySelector(".hero").offsetHeight, p = clamp(scrollY / h);
-    wrap.style.transform = `translateY(${p * 60}px) scale(${1 + p * .35}) rotate(${p * -8}deg)`; wrap.style.opacity = String(1 - p * .75); ticking = false; });
-}, { passive: true });
 let rT; const layout = () => { drawWafer(); drawBand(); };
 addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(layout, 120); });
 layout();
