@@ -4,448 +4,649 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Raazi Faisal</title>
-<meta name="description" content="Raazi Faisal: software engineer building AI products, working down the stack to the compilers, GPUs and systems that make models fast.">
+<meta name="description" content="Raazi Faisal, software engineer in Chennai. Machine-learning systems, from the product down to the silicon.">
 <meta property="og:title" content="Raazi Faisal">
-<meta property="og:description" content="I build AI products, end to end, and I'm working my way down the stack to the systems that make models fast.">
-<meta name="theme-color" content="#0b0d0c">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0d0c'/%3E%3Crect x='9' y='9' width='14' height='14' rx='1.5' fill='none' stroke='%23d6a84e' stroke-width='2'/%3E%3Cpath d='M12 5v4M16 5v4M20 5v4M12 23v4M16 23v4M20 23v4M5 12h4M5 16h4M5 20h4M23 12h4M23 16h4M23 20h4' stroke='%23d6a84e' stroke-width='1.6'/%3E%3C/svg%3E">
+<meta property="og:description" content="Machine-learning systems, from the product down to the silicon.">
+<meta name="theme-color" content="#e9ebe6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2307080a'/%3E%3Cpath d='M9 9h14M9 14h10M9 19h6M9 24h2' stroke='%23ff7a2e' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: the page is a matte-black PCB. Hero = name + 300 mm wafer, then a die floorplan (areas of work), then a pinout (current work) fed by gold traces, then a connector (contact). Single dark look by design. */
+/* Concept: "Lowering". Scrolling descends the stack. Light paper at the top (interface), darkening through
+   source -> IR -> assembly -> machine code, ending in molten silicon. One heat colour carries through the page. */
 :root{
-  --mask:#0b0d0c; --mask-2:#111412; --mask-3:#181c19; --line:#262b27; --line-2:#343a35;
-  --silk:#ece7da; --silk-dim:#a7a296; --gold:#d6a84e; --gold-ink:#1a1305; --copper:#c8743f; --led:#ffb547;
+  --paper:#e9ebe6; --paper-2:#dfe2dc; --ink:#121417; --muted:#545b64; --rule:#c9cdc6;
+  --void:#07080a; --void-2:#0f1114; --ash:#a7adb5; --ash-2:#6c737c; --vrule:#22262b;
+  --heat:#ff7a2e; --heat-ink:#b23e05; --heat-soft:#ffd9c2;
   --display:"Archivo","Helvetica Neue",Arial,system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
-  --ease-out:cubic-bezier(.2,.7,.2,1);
-  color-scheme:dark;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
 }
 *{box-sizing:border-box}
+html,body{margin:0}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-html,body{margin:0}
-body{background:var(--mask);color:var(--silk);font:400 17px/1.6 var(--display);font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  background-image:radial-gradient(circle at 1px 1px,rgba(236,231,218,.045) 1px,transparent 0);background-size:24px 24px}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--display);font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
-.wrap{max-width:1280px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.silk{font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--silk-dim)}
-.skip{position:absolute;left:12px;top:-60px;background:var(--gold);color:var(--gold-ink);padding:10px 14px;border-radius:4px;font:600 14px var(--display);text-decoration:none;z-index:20}
+:focus-visible{outline:2px solid var(--heat);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.mono{font:500 12px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.skip{position:absolute;left:12px;top:-60px;background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:4px;font:600 14px var(--display);text-decoration:none;z-index:50}
 .skip:focus{top:calc(env(safe-area-inset-top,0px) + 12px)}
 
-/* nav */
-.nav{position:absolute;inset:0 0 auto;z-index:5;padding-top:calc(env(safe-area-inset-top,0px) + 18px)}
-.nav .wrap{display:flex;align-items:center;gap:24px}
-.mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;min-height:44px;font:700 15px var(--display);font-variation-settings:"wdth" 125;letter-spacing:.04em}
-.mark svg{width:30px;height:30px}
-.nav nav{display:flex;gap:4px;margin-left:auto}
-.nav nav a{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--silk-dim);padding:14px 12px;border-radius:4px;transition:color .15s}
-.nav nav a:hover{color:var(--silk)}
-.rev{border:1px solid var(--line-2);padding:4px 8px;border-radius:3px}
-@media (max-width:640px){.rev{display:none}.nav nav a{padding:14px 8px}}
+/* header */
+.top{position:absolute;inset:0 0 auto;z-index:20;padding-top:calc(env(safe-area-inset-top,0px) + 18px)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center}
+.mark{font:800 16px var(--display);font-variation-settings:"wdth" 125;letter-spacing:.04em;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;gap:10px}
+.mark i{width:10px;height:10px;border-radius:50%;background:var(--heat);box-shadow:0 0 12px var(--heat)}
+.gh{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;gap:8px;color:var(--muted);transition:color .15s}
+.gh:hover{color:var(--ink)}
+.gh svg{width:16px;height:16px;fill:currentColor}
 
-/* hero */
-.hero{position:relative;overflow:hidden;padding-top:calc(env(safe-area-inset-top,0px) + 120px);padding-bottom:40px;isolation:isolate}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.82fr);align-items:center;gap:24px}
-.hero-copy{position:relative;z-index:2;min-width:0}
-h1{margin:22px 0 28px;font-weight:850;font-variation-settings:"wdth" 125;font-size:clamp(64px,12.4vw,196px);line-height:.84;letter-spacing:-.015em;text-transform:uppercase}
-h1 span{display:block}
-h1 span:last-child{padding-left:.42em;color:var(--mask);-webkit-text-stroke:2px var(--silk);paint-order:stroke fill}
-.lede{max-width:34ch;font-size:clamp(19px,1.9vw,24px);line-height:1.4;margin:0;font-variation-settings:"wdth" 100}
-.lede em{font-style:normal;color:var(--gold)}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px;border-radius:4px;font:600 15px var(--display);font-variation-settings:"wdth" 110;text-decoration:none;letter-spacing:.01em;transition:background-color .15s,border-color .15s,color .15s,transform .15s}
-.btn:active{transform:scale(.98)}
-.btn-gold{background:var(--gold);color:var(--gold-ink)}
-.btn-gold:hover{background:#e4b95f}
-.btn-line{border:1px solid var(--line-2);color:var(--silk)}
-.btn-line:hover{border-color:var(--gold);color:var(--gold)}
-.btn svg{width:18px;height:18px;fill:currentColor;flex:none}
+/* depth gauge (also the page's navigation) */
+.depth{position:fixed;left:max(18px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%);z-index:15;color:var(--muted);transition:color .3s}
+.depth.on-dark{color:var(--ash-2)}
+.depth ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;border-left:1px solid currentColor;padding-left:0}
+.depth a{display:grid;grid-template-columns:26px auto;align-items:center;gap:6px;text-decoration:none;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 10px 5px 12px;position:relative;min-height:28px;transition:color .2s}
+.depth a::before{content:"";position:absolute;left:-1px;top:6px;bottom:6px;width:2px;background:transparent;transition:background-color .2s}
+.depth a span{opacity:.7}
+.depth a .lbl{opacity:0;transform:translateX(-4px);transition:opacity .2s,transform .2s}
+.depth:hover a .lbl,.depth:focus-within a .lbl{opacity:1;transform:none}
+.depth:hover,.depth:focus-within{background:color-mix(in oklab,var(--paper) 88%,transparent);border-radius:4px}
+.depth.on-dark:hover,.depth.on-dark:focus-within{background:color-mix(in oklab,var(--void) 88%,transparent)}
+.depth a[aria-current="true"]{color:var(--heat-ink)}
+.depth.on-dark a[aria-current="true"]{color:var(--heat)}
+.depth a[aria-current="true"]::before{background:currentColor}
+.depth a:hover{color:var(--ink)}
+.depth.on-dark a:hover{color:#fff}
+@media (max-width:1100px){.depth{display:none}}
 
-.wafer-wrap{position:relative;width:min(620px,100%);aspect-ratio:1;justify-self:end;margin-right:-6%;will-change:transform,opacity}
-#wafer{width:100%;height:100%;display:block}
-.sheen{position:absolute;inset:2%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.55;
-  background:conic-gradient(from 0deg,transparent 0 8%,rgba(255,255,255,.16) 14%,transparent 22% 40%,rgba(120,210,255,.14) 48%,transparent 56% 70%,rgba(255,200,120,.16) 78%,transparent 86%)}
-@media (prefers-reduced-motion:no-preference){.sheen{animation:spin 48s linear infinite}}
-@keyframes spin{to{transform:rotate(1turn)}}
-.ann{position:absolute;font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--silk-dim);white-space:nowrap}
-.ann::before{content:"";position:absolute;background:var(--silk-dim);opacity:.6}
-.ann-size{top:4%;left:-2%}
-.ann-size::before{width:28px;height:1px;left:calc(100% + 8px);top:50%}
-.ann-die{left:var(--dx,60%);top:var(--dy,40%);transform:translate(18px,-50%);color:var(--gold)}
-.ann-die::before{width:14px;height:1px;right:calc(100% + 4px);top:50%;background:var(--gold)}
-.ann-notch{bottom:-1%;left:50%;transform:translateX(-50%)}
-.fid{position:absolute;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--copper);opacity:.7}
-.fid::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--copper)}
-.fid-a{top:calc(env(safe-area-inset-top,0px) + 86px);left:max(20px,env(safe-area-inset-left,0px))}
-.fid-b{bottom:28px;right:max(20px,env(safe-area-inset-right,0px))}
-@media (max-width:860px){
-  .hero{padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
-  .hero-grid{grid-template-columns:minmax(0,1fr)}
-  .wafer-wrap{order:-1;width:min(420px,86%);justify-self:center;margin:0 0 8px}
-  .ann-size{left:0}
-  .ann-notch,.ann-die{display:none}
-  h1 span:last-child{padding-left:0}
-  .fid-a{display:none}
+/* hero: the name lowers into its own bytes */
+.hero{position:relative;height:190vh}
+.hero-stick{position:sticky;top:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding-block:calc(env(safe-area-inset-top,0px) + 96px) 64px}
+.eyebrow{color:var(--muted);margin:0 0 18px}
+.name{margin:0;font-weight:760;font-variation-settings:"wdth" 125;font-size:clamp(56px,11.6vw,184px);line-height:.88;letter-spacing:-.02em;white-space:nowrap}
+.name .row{display:block}
+@media (max-width:640px){.name{font-size:20vw}}
+.ch{position:relative;display:inline-block}
+.ch .g{display:inline-block;transition:opacity .45s var(--ease),transform .45s var(--ease),filter .45s var(--ease)}
+.ch .x{position:absolute;left:50%;top:50%;transform:translate(-50%,-30%);font:500 .34em/1 var(--mono);letter-spacing:0;color:var(--heat-ink);opacity:0;transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.ch.on .g{opacity:.08;transform:translateY(.06em);filter:blur(2px)}
+.ch.on .x{opacity:1;transform:translate(-50%,-50%)}
+.bits{margin-top:28px;font:400 clamp(11px,1.05vw,14px)/1.7 var(--mono);color:var(--muted);letter-spacing:.06em;max-width:100%;overflow:hidden;white-space:nowrap;min-height:1.7em}
+.bits b{font-weight:400;color:var(--ink)}
+.intro{max-width:44ch;font-size:clamp(19px,1.8vw,23px);line-height:1.45;margin:30px 0 0}
+.cue{margin-top:40px;color:var(--muted);display:flex;align-items:center;gap:12px}
+.cue i{display:block;width:1px;height:38px;background:linear-gradient(var(--muted),transparent)}
+@media (prefers-reduced-motion:no-preference){.cue i{animation:drip 2.2s var(--ease) infinite}}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.no-js .hero,.reduce .hero{height:auto}
+.no-js .hero-stick,.reduce .hero-stick{position:relative}
+
+/* work */
+.work{padding-block:40px 120px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:18px;margin-bottom:12px}
+.sec-head .mono{color:var(--muted);margin:0}
+h2{margin:10px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:-.015em;text-wrap:balance}
+.proj{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center;padding-block:clamp(40px,6vw,80px);border-bottom:1px solid var(--rule)}
+.proj:nth-of-type(even) .viz{order:2}
+@media (max-width:860px){.proj{grid-template-columns:minmax(0,1fr)}.proj:nth-of-type(even) .viz{order:0}}
+.viz{position:relative;aspect-ratio:4/3;max-width:100%;background:var(--paper-2);border-radius:6px;overflow:hidden}
+.viz canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.viz .tag{position:absolute;left:14px;bottom:12px;color:var(--muted);font:500 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.field{color:var(--heat-ink);margin:0 0 12px}
+.proj h3{margin:0 0 16px;font-weight:780;font-variation-settings:"wdth" 118;font-size:clamp(28px,3.2vw,44px);line-height:1;letter-spacing:-.01em;text-wrap:balance}
+.proj p{margin:0 0 22px;max-width:56ch}
+.specs{display:grid;grid-template-columns:auto minmax(0,1fr);margin:0;border-top:1px solid var(--rule)}
+.specs dt,.specs dd{margin:0;padding:10px 0;border-bottom:1px solid var(--rule)}
+.specs dt{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-right:20px;padding-top:12px}
+.specs dd{font-size:15px}
+
+/* lowering */
+.lower{position:relative;--t:0;background:linear-gradient(var(--paper),var(--void))}
+.js .lower{height:520vh;background:none}
+.lower-stick{padding-block:96px}
+.js .lower-stick{position:sticky;top:0;height:100vh;height:100dvh;padding-block:0;display:flex;align-items:center;overflow:hidden;
+  background:color-mix(in oklab,var(--paper),var(--void) calc(var(--t) * 100%));
+  color:color-mix(in oklab,var(--ink),#eef0f2 calc(clamp(0,(var(--t) - .35) * 4,1) * 100%))}
+.lower-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,64px);align-items:center;width:100%}
+@media (max-width:900px){
+  .lower-grid{grid-template-columns:minmax(0,1fr);gap:18px}
+  .js:not(.reduce) .lower-stick{align-items:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 36px)}
+  .js:not(.reduce) .lower-txt .lede{display:none}
+  .js:not(.reduce) .steps li:not(.on){display:none}
+  .lower-txt h2{font-size:clamp(32px,9vw,48px)}
+  .stage{min-height:430px}
 }
+.reduce .lower{height:auto!important;background:linear-gradient(var(--paper),var(--void))}
+.reduce .lower-stick{position:relative!important;height:auto!important;padding-block:96px!important;background:none!important}
+.reduce .stage{min-height:0}
+.lower-txt .mono{opacity:.7;margin:0}
+.lower-txt h2{font-size:clamp(36px,5vw,72px)}
+.lower-txt .lede{margin:18px 0 26px;max-width:40ch;opacity:.85}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.steps li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 10px;padding:10px 0;border-top:1px solid color-mix(in oklab,currentColor 18%,transparent);opacity:.45;transition:opacity .3s}
+.steps li b{font:500 11px var(--mono);letter-spacing:.1em;padding-top:3px}
+.steps li span{font-size:15px}
+.steps li em{grid-column:2;font-style:normal;font-size:14px;opacity:.8;display:none}
+.steps li.on{opacity:1}
+.steps li.on b{color:var(--heat)}
+.steps li.on em{display:block}
+.no-js .steps li,.reduce .steps li{opacity:1}.no-js .steps li em,.reduce .steps li em{display:block}
+.stage{position:relative;min-height:440px}
+.fig{margin:0;background:var(--void-2);color:#d9dde2;border:1px solid var(--vrule);border-radius:8px;overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,.6)}
+.js .fig{position:absolute;inset:0 0 auto 0;opacity:0;transform:translateY(16px) scale(.985);transition:opacity .5s var(--ease),transform .5s var(--ease);pointer-events:none}
+.js .fig.on{opacity:1;transform:none;pointer-events:auto}
+.no-js .fig+.fig,.reduce .fig+.fig{margin-top:18px}
+.reduce .fig{position:relative!important;opacity:1!important;transform:none!important}
+.fig figcaption{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--vrule);font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ash-2)}
+.fig pre{margin:0;padding:18px 18px 20px;overflow-x:auto;font:400 13.5px/1.7 var(--mono);tab-size:4}
+@media (max-width:600px){.fig pre{font-size:11.5px}}
+.k{color:#c9a2ff}.ty{color:#7fc8d6}.nu{color:#e6c07b}.cm{color:#6c737c}.lb{color:#9aa3ad}
+.hot{color:#fff;background:rgba(255,122,46,.16);box-shadow:inset 2px 0 0 var(--heat);display:inline-block;width:100%;margin:0 -18px;padding:0 18px}
+.bitgrid{padding:22px 18px 18px;overflow-x:auto}
+.bitrow{display:flex;gap:6px;min-width:560px}
+.fld{display:flex;flex-direction:column;gap:8px}
+.fld .bb{display:flex;gap:2px}
+.fld .bb s{text-decoration:none;width:15px;height:30px;display:grid;place-items:center;font:500 13px var(--mono);background:#171a1f;border-radius:2px}
+.fld .bb s.one{background:rgba(255,122,46,.22);color:#fff}
+.fld .fl{font:500 10px/1.35 var(--mono);letter-spacing:.04em;color:var(--ash);text-transform:uppercase;max-width:130px}
+.fld .fl b{display:block;color:#fff;font-weight:500}
+.hexline{padding:0 18px 18px;font:400 13px var(--mono);color:var(--ash)}
+.hexline b{color:var(--heat);font-weight:500}
 
-/* trace band */
-.band{display:block;width:100%;height:120px;margin-top:24px}
-.trace{fill:none;stroke:var(--line-2);stroke-width:2;stroke-linejoin:round}
-.trace.gold{stroke:rgba(214,168,78,.38)}
-.pulse{fill:none;stroke:var(--gold);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:18 var(--len);stroke-dashoffset:calc(var(--len) + 18px);opacity:0}
-@media (prefers-reduced-motion:no-preference){.pulse{opacity:1;animation:run var(--dur,4s) linear var(--delay,0s) infinite}}
-@keyframes run{from{stroke-dashoffset:calc(var(--len) + 18px)}to{stroke-dashoffset:0}}
-.via{fill:var(--mask);stroke:var(--gold);stroke-width:2}
-.pad{fill:var(--gold);opacity:.85}
+/* brewing: molten silicon */
+.brew{position:relative;min-height:100vh;min-height:100dvh;background:var(--void);color:#eef0f2;overflow:hidden;display:flex;flex-direction:column}
+#melt{position:absolute;inset:0;width:100%;height:100%;display:block}
+.brew-fallback{position:absolute;inset:0;background:radial-gradient(60% 30% at 50% 78%,rgba(255,138,48,.85),rgba(255,90,20,.35) 40%,transparent 70%),var(--void)}
+.brew>.wrap{width:100%}
+.brew-txt{position:relative;z-index:2;padding-top:clamp(80px,12vh,140px)}
+.brew-txt .mono{color:var(--ash-2);margin:0}
+.brew h2{font-size:clamp(46px,7vw,116px);line-height:.88;max-width:8ch;margin-top:16px;text-shadow:0 0 60px rgba(255,122,46,.25)}
+.brew .sub{margin:22px 0 0;color:var(--ash);max-width:36ch;font-size:18px}
+.brew .readout{position:relative;z-index:2;margin-top:auto;padding-bottom:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--ash-2)}
+.brew .readout b{color:var(--heat);font-weight:500}
 
-/* section heads */
-section{position:relative}
-.sec{padding-block:96px}
-.sec-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px 24px;margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:18px}
-h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:clamp(40px,6vw,84px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
-.sec-head p{margin:0;color:var(--silk-dim);max-width:34ch;font-size:15px}
-@media (max-width:640px){.sec{padding-block:72px}.sec-head{grid-template-columns:minmax(0,1fr)}}
-
-/* die floorplan */
-.die-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
-@media (max-width:900px){.die-layout{grid-template-columns:minmax(0,1fr)}}
-.die{position:relative;padding:22px;background:var(--mask-2);border:1px solid var(--line-2);border-radius:6px}
-.die::before,.die::after{content:"";position:absolute;left:22px;right:22px;height:6px;pointer-events:none;
-  background:repeating-linear-gradient(90deg,var(--gold) 0 8px,transparent 8px 22px);opacity:.55}
-.die::before{top:7px}.die::after{bottom:7px}
-.die-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(92px,auto);gap:5px;padding:5px;background:#060706;border-radius:3px}
-.blk{all:unset;box-sizing:border-box;position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:12px 13px;border-radius:2px;cursor:pointer;min-width:0;
-  background:var(--mask-3);border:1px solid var(--line);transition:border-color .2s,background-color .2s;overflow:hidden}
-.blk:hover{border-color:var(--line-2);background:#1d221e}
-.blk:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.blk[aria-pressed="true"]{border-color:var(--gold);background:#1f1b12}
-.blk .des{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--silk-dim);position:relative;z-index:1}
-.blk[aria-pressed="true"] .des{color:var(--gold)}
-.blk .nm{font:700 clamp(15px,1.45vw,19px)/1.15 var(--display);font-variation-settings:"wdth" 112;position:relative;z-index:1}
-.blk .st{position:absolute;top:10px;right:10px;font:500 10px var(--mono);letter-spacing:.1em;padding:2px 6px;border-radius:2px;border:1px solid var(--line-2);color:var(--silk-dim);z-index:1}
-.blk .st.now{border-color:var(--led);color:var(--led)}
-.blk .tex{position:absolute;inset:0;opacity:.5;pointer-events:none}
-.t-sm{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:14px 14px}
-.t-cache{background-image:repeating-linear-gradient(0deg,var(--line) 0 1px,transparent 1px 7px)}
-.t-core{background-image:linear-gradient(90deg,transparent 58%,rgba(214,168,78,.10) 58% 62%,transparent 62%),repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 11px)}
-.t-io{background-image:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 12px);background-size:100% 6px;background-repeat:no-repeat;background-position:0 100%}
-.t-fab{background-image:repeating-linear-gradient(45deg,var(--line) 0 1px,transparent 1px 9px)}
-.die-grid{grid-template-columns:repeat(12,minmax(0,1fr))}
-.b-ai{grid-column:span 6;grid-row:span 2}.b-sys{grid-column:span 6}.b-os{grid-column:span 3}.b-cc{grid-column:span 3}
-.b-fs{grid-column:span 4}.b-gpu{grid-column:span 4}.b-ml{grid-column:span 4}
-@media (max-width:560px){.die-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(84px,auto)}
-  .b-ai,.b-sys{grid-column:span 2}.b-ai{grid-row:span 1}.b-os,.b-cc,.b-fs,.b-gpu{grid-column:span 1}.b-ml{grid-column:span 2}}
-.die-cap{display:flex;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
-
-.sheet{background:var(--mask-2);border:1px solid var(--line-2);border-radius:6px;padding:24px 24px 20px;min-width:0}
-.sheet-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.sheet h3{margin:14px 0 12px;font-weight:800;font-variation-settings:"wdth" 118;font-size:clamp(28px,3vw,38px);line-height:1;text-wrap:balance}
-.sheet p{margin:0 0 20px;color:var(--silk)}
-.sheet dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0;margin:0;border-top:1px solid var(--line)}
-.sheet dt,.sheet dd{padding:10px 0;border-bottom:1px solid var(--line);margin:0}
-.sheet dt{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--silk-dim);padding-right:18px;padding-top:12px}
-.sheet dd{font-size:15px}
-.state{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;color:var(--silk-dim)}
-.state i{width:8px;height:8px;border-radius:50%;background:var(--silk-dim)}
-.state.now{color:var(--led)}.state.now i{background:var(--led);box-shadow:0 0 10px var(--led)}
-.state.ship{color:var(--gold)}.state.ship i{background:var(--gold)}
-
-/* pinout */
-.pin-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:0}
-@media (max-width:760px){.pin-layout{grid-template-columns:56px minmax(0,1fr)}}
-.pin-traces{position:relative}
-.pin-traces svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.pins{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.pins li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 20px;align-items:start;padding:22px 24px;background:var(--mask-2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:4px}
-.pins .p{font:500 12px var(--mono);letter-spacing:.1em;color:var(--gold);padding-top:4px}
-.pins b{display:block;font-weight:800;font-variation-settings:"wdth" 120;font-size:20px;letter-spacing:.01em;text-transform:uppercase;margin-bottom:4px}
-.pins p{margin:0;max-width:62ch;color:var(--silk)}
-.pins .state{padding-top:5px}
-@media (max-width:640px){.pins li{grid-template-columns:minmax(0,1fr)}.pins .p{padding:0}}
-@media (prefers-reduced-motion:no-preference){.state.now i{animation:blink 2.4s ease-in-out infinite}}
-@keyframes blink{50%{opacity:.35}}
-
-/* connector / contact */
-.conn{border:1px solid var(--line-2);border-radius:6px;background:var(--mask-2);padding:clamp(24px,4vw,48px);display:grid;gap:28px}
-.conn-pins{display:flex;gap:10px}
-.conn-pins i{width:22px;height:10px;background:var(--gold);border-radius:1px;opacity:.85}
-.big-link{display:inline-flex;align-items:center;gap:.35em;font-weight:850;font-variation-settings:"wdth" 125;font-size:clamp(30px,6.4vw,92px);line-height:.95;letter-spacing:-.01em;text-transform:uppercase;text-decoration:none;overflow-wrap:anywhere;transition:color .15s}
-.big-link:hover{color:var(--gold)}
-.big-link svg{width:.62em;height:.62em;flex:none;fill:currentColor}
-footer{padding-block:40px calc(env(safe-area-inset-bottom,0px) + 40px)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
-footer .fid{position:relative;display:inline-block;vertical-align:middle;margin-right:10px}
-
-/* reveal */
-.rv{opacity:1;transform:none}
-@media (prefers-reduced-motion:no-preference){
-  .js .rv{opacity:.001;transform:translateY(14px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
-  .js .rv.in{opacity:1;transform:none}
-}
+footer{background:var(--void);color:var(--ash);border-top:1px solid var(--vrule);padding-block:36px calc(env(safe-area-inset-bottom,0px) + 36px)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer a.big{font-weight:800;font-variation-settings:"wdth" 125;font-size:clamp(26px,4vw,48px);text-decoration:none;color:#eef0f2;display:inline-flex;align-items:center;gap:14px;min-height:48px;transition:color .15s}
+footer a.big:hover{color:var(--heat)}
+footer a.big svg{width:.8em;height:.8em;fill:currentColor}
 </style>
 </head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
+<body class="no-js">
+<a class="skip" href="#work">Skip to work</a>
 
-<header class="nav">
+<header class="top">
   <div class="wrap">
-    <a class="mark" href="#top" aria-label="Raazi Faisal, back to top">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="9" width="14" height="14" rx="1.5" fill="none" stroke="#d6a84e" stroke-width="1.8"/><path d="M12 4v5M16 4v5M20 4v5M12 23v5M16 23v5M20 23v5M4 12h5M4 16h5M4 20h5M23 12h5M23 16h5M23 20h5" stroke="#d6a84e" stroke-width="1.4"/><circle cx="12.5" cy="12.5" r="1.3" fill="#d6a84e"/></svg>
-      RF
-    </a>
-    <nav aria-label="Sections">
-      <a href="#floorplan">Work</a>
-      <a href="#now">Now</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <span class="silk rev" aria-hidden="true">Rev A · 2026</span>
+    <a class="mark" href="#top" aria-label="Raazi Faisal, back to top"><i aria-hidden="true"></i>RF</a>
+    <a class="gh" href="https://github.com/raazifaisal" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
   </div>
 </header>
 
-<main id="main">
+<nav class="depth" id="depth" aria-label="Layers of this page">
+  <ol>
+    <li><a href="#top" data-go="top"><span>L6</span><span class="lbl">Interface</span></a></li>
+    <li><a href="#work" data-go="work"><span>L5</span><span class="lbl">Work</span></a></li>
+    <li><a href="#lower" data-go="s0"><span>L4</span><span class="lbl">Source</span></a></li>
+    <li><a href="#lower" data-go="s1"><span>L3</span><span class="lbl">IR</span></a></li>
+    <li><a href="#lower" data-go="s2"><span>L2</span><span class="lbl">Assembly</span></a></li>
+    <li><a href="#lower" data-go="s3"><span>L1</span><span class="lbl">Machine code</span></a></li>
+    <li><a href="#brew" data-go="brew"><span>L0</span><span class="lbl">Silicon</span></a></li>
+  </ol>
+</nav>
+
+<main>
   <section class="hero" id="top" aria-labelledby="name">
-    <span class="fid fid-a" aria-hidden="true"></span>
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="silk">U1 · Software engineer · Chennai 13.08°N 80.27°E</p>
-        <h1 id="name"><span>Raazi</span><span>Faisal</span></h1>
-        <p class="lede">I build AI products, end to end. Now I'm working my way down the stack, to the <em>compilers, GPUs and systems</em> that make models fast.</p>
-        <div class="cta">
-          <a class="btn btn-gold" href="#floorplan">See the floorplan</a>
-          <a class="btn btn-line" href="https://github.com/raazifaisal" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        </div>
-      </div>
-      <div class="wafer-wrap" id="waferWrap" aria-hidden="true">
-        <canvas id="wafer"></canvas>
-        <div class="sheen"></div>
-        <span class="ann ann-size">300 mm wafer</span>
-        <span class="ann ann-die" id="annDie">Die RF-01</span>
-        <span class="ann ann-notch">Notch</span>
-      </div>
+    <div class="hero-stick wrap">
+      <p class="mono eyebrow">Software engineer · Chennai, India</p>
+      <h1 class="name" id="name" aria-label="Raazi Faisal"><span class="row">Raazi</span><span class="row">Faisal</span></h1>
+      <div class="bits" id="bits" aria-hidden="true"></div>
+      <p class="intro">I turn machine-learning models into things people use, and I like knowing what happens underneath, all the way down to the silicon.</p>
+      <p class="mono cue" aria-hidden="true"><i></i>Scroll to lower</p>
     </div>
-    <svg class="band" id="band" aria-hidden="true"></svg>
-    <span class="fid fid-b" aria-hidden="true"></span>
   </section>
 
-  <section class="sec" id="floorplan" aria-labelledby="h-work">
+  <section class="work" id="work" aria-labelledby="h-work">
     <div class="wrap">
-      <div class="sec-head rv">
-        <div><span class="silk">U2 · Die floorplan</span><h2 id="h-work">Line of work</h2></div>
-        <p>Each block is an area I work in. Select one to read its datasheet.</p>
+      <div class="sec-head">
+        <div><p class="mono">L5 · Work</p><h2 id="h-work">Selected work</h2></div>
       </div>
-      <div class="die-layout">
-        <div class="rv">
-          <div class="die">
-            <div class="die-grid" role="group" aria-label="Areas of work">
-              <button class="blk b-ai" data-id="ai" aria-pressed="false" aria-controls="sheet"><span class="tex t-sm"></span><span class="st">Ship</span><span class="des">GPC · Product</span><span class="nm">AI products</span></button>
-              <button class="blk b-sys" data-id="sys" aria-pressed="true" aria-controls="sheet"><span class="tex t-core"></span><span class="st now">Now</span><span class="des">P-core</span><span class="nm">Systems &amp; performance</span></button>
-              <button class="blk b-os" data-id="os" aria-pressed="false" aria-controls="sheet"><span class="tex t-cache"></span><span class="st now">Now</span><span class="des">MMU</span><span class="nm">Operating systems</span></button>
-              <button class="blk b-cc" data-id="cc" aria-pressed="false" aria-controls="sheet"><span class="tex t-cache"></span><span class="des">IR</span><span class="nm">Compilers</span></button>
-              <button class="blk b-fs" data-id="fs" aria-pressed="false" aria-controls="sheet"><span class="tex t-io"></span><span class="st">Ship</span><span class="des">I/O</span><span class="nm">Full stack</span></button>
-              <button class="blk b-gpu" data-id="gpu" aria-pressed="false" aria-controls="sheet"><span class="tex t-sm"></span><span class="st">Next</span><span class="des">SM array</span><span class="nm">GPU kernels</span></button>
-              <button class="blk b-ml" data-id="ml" aria-pressed="false" aria-controls="sheet"><span class="tex t-fab"></span><span class="st">Next</span><span class="des">Fabric</span><span class="nm">ML infrastructure</span></button>
+
+      <article class="proj">
+        <div class="viz"><canvas data-viz="er" aria-hidden="true"></canvas><span class="tag" aria-hidden="true">Candidate pairs · pruned · matched</span></div>
+        <div>
+          <p class="mono field">Information retrieval</p>
+          <h3>One business, a thousand spellings</h3>
+          <p>An entity-resolution system that decides which messy business records describe the same company. Dense and lexical retrieval propose candidates, a gradient-boosted pruner and a two-stage ranker narrow them down, calibration sets the threshold, and a small language model gets the final veto.</p>
+          <dl class="specs"><dt>Result</dt><dd>0.985 macro-F0.5 on a competition leaderboard</dd><dt>Stack</dt><dd>Bi-encoders · TF-IDF · LightGBM · XGBoost · LoRA verifier</dd></dl>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz"><canvas data-viz="mem" aria-hidden="true"></canvas><span class="tag" aria-hidden="true">Knowledge base · edits · tombstones</span></div>
+        <div>
+          <p class="mono field">Language-model research</p>
+          <h3>Models that check instead of remember</h3>
+          <p>Research on small language models that answer from an external knowledge base. Do they follow an edit, keep a deleted fact deleted, and reject a corrupted record? Pre-registered hypotheses, LoRA fine-tunes of 0.5B and 1.5B models, and experiments run across Kaggle, an A100 and Kubernetes jobs.</p>
+          <dl class="specs"><dt>Method</dt><dd>Controlled edit, delete and corruption probes</dd><dt>Stack</dt><dd>PyTorch · LoRA · Qwen2.5 · Kubernetes</dd></dl>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz"><canvas data-viz="sar" aria-hidden="true"></canvas><span class="tag" aria-hidden="true">SAR backscatter · before / after</span></div>
+        <div>
+          <p class="mono field">Earth observation</p>
+          <h3>What the satellite saw</h3>
+          <p>Independent evidence of what a disaster did to industrial sites. Radar backscatter from Sentinel-1 and NISAR and night-time lights from VIIRS feed a deterministic engine, and every report is canonically hashed so anyone can check it later.</p>
+          <dl class="specs"><dt>Sensors</dt><dd>Sentinel-1 · NISAR · VIIRS</dd><dt>Stack</dt><dd>Python · Earth Engine · Cloud Run · RFC 8785 hashing</dd></dl>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz"><canvas data-viz="glu" aria-hidden="true"></canvas><span class="tag" aria-hidden="true">mg/dL · P10–P90 forecast</span></div>
+        <div>
+          <p class="mono field">Clinical time series</p>
+          <h3>Glucose, with error bars</h3>
+          <p>A Temporal Fusion Transformer that forecasts blood glucose as a range instead of a single guess, using quantile outputs, paired with a rule-based risk classifier and served behind an API.</p>
+          <dl class="specs"><dt>Model</dt><dd>Encoder–decoder LSTMs, multi-head attention, quantile heads</dd><dt>Stack</dt><dd>PyTorch · Flask · Render</dd></dl>
+        </div>
+      </article>
+
+      <article class="proj">
+        <div class="viz"><canvas data-viz="ppg" aria-hidden="true"></canvas><span class="tag" aria-hidden="true">PPG pulse · HR · HRV</span></div>
+        <div>
+          <p class="mono field">Physiological computing</p>
+          <h3>Explanations that read the room</h3>
+          <p>An assistant that adapts how it explains things to the person reading. A watch streams heart rate and heart-rate variability to the phone every two seconds, a stress score is computed on the device, and a retrieval-augmented model shapes its answers to match.</p>
+          <dl class="specs"><dt>Signals</dt><dd>Heart rate · HRV · stress score</dd><dt>Stack</dt><dd>Swift · HealthKit · watchOS · RAG</dd></dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="lower" id="lower" aria-labelledby="h-lower">
+    <div class="lower-stick">
+      <div class="wrap lower-grid">
+        <div class="lower-txt">
+          <p class="mono">L4 → L1 · Lowering</p>
+          <h2 id="h-lower">All the way down</h2>
+          <p class="lede">Most of that work rests on one small loop: a similarity score. Here it is compiled on an M4, one layer at a time.</p>
+          <ol class="steps" id="steps">
+            <li data-s="0"><b>L4</b><span>Source</span><em>Multiply two vectors element by element and add it all up.</em></li>
+            <li data-s="1"><b>L3</b><span>IR</span><em>Clang turns it into LLVM IR in SSA form. The loop becomes φ-nodes and one fused multiply-add.</em></li>
+            <li data-s="2"><b>L2</b><span>Assembly</span><em>The backend picks five AArch64 instructions for the loop body: two loads, one fmadd, a count and a branch.</em></li>
+            <li data-s="3"><b>L1</b><span>Machine code</span><em>Each instruction becomes a 32-bit word. The loop is 20 bytes. This is the multiply-add, bit by bit.</em></li>
+          </ol>
+        </div>
+        <div class="stage" id="stage">
+          <figure class="fig" data-s="0">
+            <figcaption><span>score.c</span><span>C</span></figcaption>
+<pre><code><span class="ty">float</span> score(<span class="k">const</span> <span class="ty">float</span> *q, <span class="k">const</span> <span class="ty">float</span> *d, <span class="ty">int</span> n) {
+  <span class="ty">float</span> s = <span class="nu">0.0f</span>;
+  <span class="k">for</span> (<span class="ty">int</span> i = <span class="nu">0</span>; i &lt; n; i++)
+<span class="hot">    s += q[i] * d[i];</span>
+  <span class="k">return</span> s;
+}</code></pre>
+          </figure>
+          <figure class="fig" data-s="1">
+            <figcaption><span>score.ll · loop body</span><span>LLVM IR · -O1</span></figcaption>
+<pre><code><span class="lb">9:</span>                                     <span class="cm">; preds = %5, %9</span>
+  %10 = <span class="k">phi</span> <span class="ty">i64</span>   [ <span class="nu">0</span>, %5 ], [ %17, %9 ]
+  %11 = <span class="k">phi</span> <span class="ty">float</span> [ <span class="nu">0.0</span>, %5 ], [ %16, %9 ]
+  %12 = <span class="k">getelementptr inbounds</span> <span class="ty">float</span>, <span class="ty">ptr</span> %0, <span class="ty">i64</span> %10
+  %13 = <span class="k">load</span> <span class="ty">float</span>, <span class="ty">ptr</span> %12, <span class="k">align</span> <span class="nu">4</span>
+  %14 = <span class="k">getelementptr inbounds</span> <span class="ty">float</span>, <span class="ty">ptr</span> %1, <span class="ty">i64</span> %10
+  %15 = <span class="k">load</span> <span class="ty">float</span>, <span class="ty">ptr</span> %14, <span class="k">align</span> <span class="nu">4</span>
+<span class="hot">  %16 = <span class="k">tail call</span> <span class="ty">float</span> @llvm.fmuladd.f32(<span class="ty">float</span> %13, <span class="ty">float</span> %15, <span class="ty">float</span> %11)</span>
+  %17 = <span class="k">add nuw nsw</span> <span class="ty">i64</span> %10, <span class="nu">1</span>
+  %18 = <span class="k">icmp eq</span> <span class="ty">i64</span> %17, %6
+  <span class="k">br</span> <span class="ty">i1</span> %18, <span class="k">label</span> %7, <span class="k">label</span> %9</code></pre>
+          </figure>
+          <figure class="fig" data-s="2">
+            <figcaption><span>score.s · loop</span><span>AArch64 · Apple clang 21</span></figcaption>
+<pre><code><span class="lb">LBB0_2:</span>                          <span class="cm">; inner loop</span>
+  <span class="k">ldr</span>     s1, [x0], <span class="nu">#4</span>          <span class="cm">; q[i], then advance</span>
+  <span class="k">ldr</span>     s2, [x1], <span class="nu">#4</span>          <span class="cm">; d[i], then advance</span>
+<span class="hot">  <span class="k">fmadd</span>   s0, s1, s2, s0        <span class="cm">; s = q[i]*d[i] + s</span></span>
+  <span class="k">subs</span>    x8, x8, <span class="nu">#1</span>           <span class="cm">; n--</span>
+  <span class="k">b.ne</span>    LBB0_2</code></pre>
+          </figure>
+          <figure class="fig" data-s="3">
+            <figcaption><span>score.o · __TEXT,__text</span><span>Machine code</span></figcaption>
+<pre><code><span class="lb">10:</span>  <span class="nu">bc404401</span>   ldr   s1, [x0], #4
+<span class="lb">14:</span>  <span class="nu">bc404422</span>   ldr   s2, [x1], #4
+<span class="hot"><span class="lb">18:</span>  <span class="nu">1f020020</span>   fmadd s0, s1, s2, s0</span>
+<span class="lb">1c:</span>  <span class="nu">f1000508</span>   subs  x8, x8, #1
+<span class="lb">20:</span>  <span class="nu">54ffff81</span>   b.ne  0x10</code></pre>
+            <div class="bitgrid" aria-label="The fmadd instruction 0x1F020020 broken into its bit fields">
+              <div class="bitrow" id="bitrow"></div>
             </div>
-          </div>
-          <div class="die-cap"><span class="silk">RF-01 · Rev A</span><span class="silk">Ship · Now · Next</span></div>
+            <p class="hexline">0x<b>1F020020</b> · fmadd, single precision, Rd = s0, Rn = s1, Rm = s2, Ra = s0</p>
+          </figure>
         </div>
-        <aside class="sheet rv" id="sheet" aria-live="polite" aria-label="Datasheet">
-          <div class="sheet-top"><span class="silk" id="sDes">P-core</span><span class="state now" id="sState"><i></i>Now</span></div>
-          <h3 id="sTitle">Systems &amp; performance</h3>
-          <p id="sBody">Below the product layer I want to know where the time goes: CPU microarchitecture, memory models and profiling. Right now that means measuring and cutting overhead in the stack that runs Windows games on Apple Silicon.</p>
-          <dl id="sParams"></dl>
-        </aside>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="now" aria-labelledby="h-now">
-    <div class="wrap">
-      <div class="sec-head rv">
-        <div><span class="silk">J1 · Pinout</span><h2 id="h-now">Currently</h2></div>
-        <p>What's live on the board right now.</p>
-      </div>
-      <div class="pin-layout">
-        <div class="pin-traces" aria-hidden="true"><svg id="pinSvg"></svg></div>
-        <ol class="pins" id="pins">
-          <li class="rv"><span class="p">P1</span><div><b>Roadmap</b><p>Working through a ground-up roadmap that runs from silicon and computer architecture to production ML systems, pairing each topic with real open-source contributions.</p></div><span class="state now"><i></i>Active</span></li>
-          <li class="rv"><span class="p">P2</span><div><b>Translation layer</b><p>Profiling the Windows-on-Mac stack (Wine and DXMT) on an M4 to find and remove overhead.</p></div><span class="state now"><i></i>Active</span></li>
-          <li class="rv"><span class="p">P3</span><div><b>Kernels</b><p>Next up: Metal kernels in MLX, then CUDA and Triton.</p></div><span class="state"><i></i>Queued</span></li>
-        </ol>
-      </div>
+  <section class="brew" id="brew" aria-labelledby="h-brew">
+    <div class="brew-fallback" aria-hidden="true"></div>
+    <canvas id="melt" aria-hidden="true"></canvas>
+    <div class="wrap brew-txt">
+      <p class="mono">L0 · Silicon</p>
+      <h2 id="h-brew">Great stuff brewing</h2>
+      <p class="sub">Some of it is still in the melt.</p>
     </div>
-  </section>
-
-  <section class="sec" id="contact" aria-labelledby="h-contact">
-    <div class="wrap">
-      <div class="conn rv">
-        <div class="sec-head" style="margin:0;border:0;padding:0">
-          <div><span class="silk">J2 · Connector</span><h2 id="h-contact">Find me</h2></div>
-          <div class="conn-pins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        </div>
-        <a class="big-link" href="https://github.com/raazifaisal" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>raazifaisal</a>
-      </div>
-    </div>
+    <div class="wrap readout mono" aria-hidden="true"><span>Si melt <b>1414 °C</b></span><span>Seed rotation <b>12 rpm</b></span><span>Pull rate <b>~1 mm/min</b></span></div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span class="silk"><span class="fid" aria-hidden="true"></span>Raazi Faisal · Chennai · 2026</span>
-    <span class="silk">Rev A · Designed on an M4</span>
+    <a class="big" href="https://github.com/raazifaisal" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>raazifaisal</a>
+    <span class="mono">© 2026 Raazi Faisal · Chennai</span>
   </div>
 </footer>
 
 <script>
+(() => {
+const body = document.body;
+body.classList.remove("no-js");
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
 document.documentElement.classList.add("js");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const SVGNS = "http://www.w3.org/2000/svg";
-const mk = (tag, attrs) => { const e = document.createElementNS(SVGNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+if (REDUCE) body.classList.add("reduce");
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
-/* ---------- wafer ---------- */
-const wrap = document.getElementById("waferWrap"), cv = document.getElementById("wafer"), ann = document.getElementById("annDie");
-function drawWafer(){
-  const css = wrap.clientWidth; if (!css) return;
-  const dpr = Math.min(2, window.devicePixelRatio || 1), S = Math.round(css * dpr);
-  cv.width = S; cv.height = S;
-  const g = cv.getContext("2d"), c = S / 2, R = S * 0.47;
-  g.clearRect(0, 0, S, S);
-  // substrate
-  const base = g.createRadialGradient(c - R * .3, c - R * .35, R * .1, c, c, R);
-  base.addColorStop(0, "#2a2f36"); base.addColorStop(1, "#121418");
-  g.beginPath(); g.arc(c, c, R, 0, Math.PI * 2); g.fillStyle = base; g.fill();
-  g.save(); g.beginPath(); g.arc(c, c, R * 0.985, 0, Math.PI * 2); g.clip();
-  const dw = R / 8.6, dh = dw * 0.78, gap = dw * 0.07;
-  const cols = Math.ceil((2 * R) / (dw + gap)) + 2, rows = Math.ceil((2 * R) / (dh + gap)) + 2;
-  const ox = c - (cols * (dw + gap)) / 2, oy = c - (rows * (dh + gap)) / 2;
-  const edge = R * 0.955; let best = null;
-  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
-    const x = ox + i * (dw + gap), y = oy + j * (dh + gap);
-    const corners = [[x, y], [x + dw, y], [x, y + dh], [x + dw, y + dh]];
-    const inside = corners.filter(([px, py]) => Math.hypot(px - c, py - c) < edge).length;
-    if (!inside) continue;
-    const mx = x + dw / 2 - c, my = y + dh / 2 - c, r = Math.hypot(mx, my) / R, a = Math.atan2(my, mx);
-    // thin-film interference: hue drifts with angle and radius
-    const wave = Math.sin(a * 2 + r * 3.4);
-    const bronze = Math.max(0, Math.cos(a + 2.2)) * r;            // warm band on one side, like light catching the film
-    const hue = (198 + wave * 34) * (1 - bronze) + 32 * bronze;
-    const light = 26 + 12 * Math.cos(a - 0.8) * (0.4 + r * 0.6) + (1 - r) * 7;
-    const full = inside === 4;
-    g.globalAlpha = full ? 1 : 0.38;
-    g.fillStyle = `hsl(${hue} ${full ? 30 + bronze * 14 : 18}% ${light}%)`;
-    g.fillRect(x, y, dw, dh);
-    if (full) {
-      g.fillStyle = "rgba(255,255,255,.10)";
-      g.fillRect(x + dw * .08, y + dh * .12, dw * .46, dh * .34);
-      g.fillRect(x + dw * .60, y + dh * .12, dw * .30, dh * .74);
-      g.fillStyle = "rgba(0,0,0,.18)";
-      g.fillRect(x + dw * .08, y + dh * .56, dw * .46, dh * .30);
-      const score = Math.hypot(mx - R * .28, my + R * .18);
-      if (!best || score < best.s) best = { s: score, x, y };
-    }
-  }
-  g.globalAlpha = 1; g.restore();
-  // highlighted die
-  if (best) {
-    g.lineWidth = 2.2 * dpr; g.strokeStyle = "#d6a84e";
-    g.strokeRect(best.x - 1.5 * dpr, best.y - 1.5 * dpr, dw + 3 * dpr, dh + 3 * dpr);
-    ann.style.setProperty("--dx", ((best.x + dw) / S * 100) + "%");
-    ann.style.setProperty("--dy", ((best.y + dh / 2) / S * 100) + "%");
-  }
-  // bevel + notch
-  g.lineWidth = 1.5 * dpr; g.strokeStyle = "rgba(255,255,255,.12)";
-  g.beginPath(); g.arc(c, c, R, 0, Math.PI * 2); g.stroke();
-  g.globalCompositeOperation = "destination-out";
-  g.beginPath(); g.arc(c, c + R, R * 0.028, 0, Math.PI * 2); g.fill();
-  g.globalCompositeOperation = "source-over";
-}
-
-/* ---------- traces ---------- */
-function addPulse(svg, d, len, i){
-  const p = mk("path", { d, class: "pulse" });
-  p.style.setProperty("--len", len + "px");
-  p.style.setProperty("--dur", (3.2 + (i % 4) * 0.7) + "s");
-  p.style.setProperty("--delay", (-(i * 0.9)) + "s");
-  svg.appendChild(p);
-}
-function drawBand(){
-  const svg = document.getElementById("band"); svg.textContent = "";
-  const W = svg.clientWidth, H = svg.clientHeight; if (!W) return;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const n = Math.max(5, Math.min(11, Math.round(W / 120))), step = 9;
-  for (let i = 0; i < n; i++) {
-    const y0 = 14 + i * step, drop = 28 + (i % 3) * 10;
-    const bend = W * (0.18 + 0.055 * i), run = W * (0.52 + 0.035 * ((i * 7) % 9));
-    const y1 = Math.min(H - 10, y0 + drop);
-    const d = `M0 ${y0} H${bend} L${bend + (y1 - y0)} ${y1} H${run}`;
-    const gold = i % 3 === 1;
-    const t = mk("path", { d, class: "trace" + (gold ? " gold" : "") }); svg.appendChild(t);
-    svg.appendChild(mk("circle", { cx: run + 5, cy: y1, r: 4.5, class: "via" }));
-    if (gold && !reduce) addPulse(svg, d, Math.round(t.getTotalLength()), i);
-  }
-  // pad row on the right, like an edge connector
-  for (let k = 0; k < Math.floor(W * 0.18 / 16); k++) svg.appendChild(mk("rect", { x: W * 0.8 + k * 16, y: H - 34, width: 9, height: 26, rx: 1, class: "pad" }));
-}
-function drawPinTraces(){
-  const host = document.querySelector(".pin-traces"), svg = document.getElementById("pinSvg");
-  svg.textContent = "";
-  const hr = host.getBoundingClientRect(); if (!hr.width) return;
-  svg.setAttribute("viewBox", `0 0 ${hr.width} ${hr.height}`);
-  const lis = [...document.querySelectorAll("#pins li")];
-  lis.forEach((li, i) => {
-    const r = li.getBoundingClientRect(), y = r.top - hr.top + 34;
-    const sx = Math.min(hr.width * 0.25 + i * 14, hr.width - 30), k = Math.min(30, hr.width * 0.3);
-    const d = `M${sx} 6 V${Math.max(6, y - k)} L${Math.min(sx + k, hr.width)} ${y} H${hr.width}`;
-    const t = mk("path", { d, class: "trace gold" }); svg.appendChild(t);
-    svg.appendChild(mk("circle", { cx: sx, cy: 6, r: 4.5, class: "via" }));
-    if (!reduce) addPulse(svg, d, Math.round(t.getTotalLength()), i + 2);
+/* ---------- hero: the name lowers into UTF-8 ---------- */
+const nameEl = $("#name"), bitsEl = $("#bits");
+const chars = [];
+nameEl.querySelectorAll(".row").forEach(row => {
+  const txt = row.textContent; row.textContent = "";
+  [...txt].forEach(c => {
+    const ch = document.createElement("span"); ch.className = "ch"; ch.setAttribute("aria-hidden", "true");
+    const g = document.createElement("span"); g.className = "g"; g.textContent = c;
+    const x = document.createElement("span"); x.className = "x"; x.textContent = c.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0");
+    ch.append(g, x); row.append(ch); chars.push(ch);
   });
+});
+const bytes = [..."Raazi Faisal"].map(c => c.charCodeAt(0));
+const bitStr = bytes.map(b => b.toString(2).padStart(8, "0")).join(" ");
+function heroProgress(p){
+  chars.forEach((ch, i) => ch.classList.toggle("on", p > 0.12 + i * 0.045));
+  const shown = Math.round(clamp((p - 0.25) / 0.6) * bitStr.length);
+  bitsEl.innerHTML = shown ? "<b>" + bitStr.slice(0, shown) + "</b>" + bitStr.slice(shown).replace(/[01]/g, "·") : "";
 }
 
-/* ---------- die datasheet ---------- */
-const SHEET = {
-  ai:  { des: "GPC · Product", title: "AI products", state: ["ship", "Shipping"], body: "I design and build software that puts machine learning in front of real people, covering the data, the models, the backend and the app on top. I care most about the moment a model becomes something useful and reliable.", params: [["Scope", "Data → model → backend → app"], ["Role", "End to end"]] },
-  sys: { des: "P-core", title: "Systems & performance", state: ["now", "Now"], body: "Below the product layer I want to know where the time goes: CPU microarchitecture, memory models and profiling. Right now that means measuring and cutting overhead in the stack that runs Windows games on Apple Silicon.", params: [["Target", "Apple M4"], ["Stack", "Wine · DXMT · Metal"], ["Tools", "Instruments · Metal System Trace"]] },
-  os:  { des: "MMU", title: "Operating systems", state: ["now", "Now"], body: "Virtual memory, scheduling and synchronization. It's the layer where a translation stack like Wine spends much of its overhead, so it's where I'm digging.", params: [["Focus", "Sync primitives · 16 KB pages"], ["Platforms", "macOS/XNU · Windows NT"]] },
-  cc:  { des: "IR", title: "Compilers", state: ["", "Studying"], body: "SSA, lowering and code generation, from LLVM to MLIR and the ML compilers built on top of them.", params: [["Path", "LLVM → MLIR → Triton"]] },
-  fs:  { des: "I/O", title: "Full stack", state: ["ship", "Shipping"], body: "The interfaces and services around the models: web, mobile and desktop front ends and the APIs behind them.", params: [["Surface", "Web · Mobile · Desktop"]] },
-  gpu: { des: "SM array", title: "GPU kernels", state: ["", "Next"], body: "CUDA, Triton and Metal kernels: coalesced memory access, tiling and keeping the math units fed.", params: [["Languages", "Metal · CUDA · Triton"], ["First stop", "MLX"]] },
-  ml:  { des: "Fabric", title: "ML infrastructure", state: ["", "Next"], body: "Inference serving, quantization and distributed training: the infrastructure that decides how fast and how cheaply models run.", params: [["Areas", "Serving · Quantization · Parallelism"]] }
-};
-function select(id){
-  const s = SHEET[id]; if (!s) return;
-  document.querySelectorAll(".blk").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
-  document.getElementById("sDes").textContent = s.des;
-  document.getElementById("sTitle").textContent = s.title;
-  document.getElementById("sBody").textContent = s.body;
-  const st = document.getElementById("sState"); st.className = "state " + s.state[0]; st.innerHTML = "<i></i>"; st.append(s.state[1]);
-  const dl = document.getElementById("sParams"); dl.textContent = "";
-  s.params.forEach(([k, v]) => { const dt = document.createElement("dt"), dd = document.createElement("dd"); dt.textContent = k; dd.textContent = v; dl.append(dt, dd); });
-}
-document.querySelectorAll(".blk").forEach(b => b.addEventListener("click", () => select(b.dataset.id)));
-select("sys");
+/* ---------- bit fields for fmadd 0x1F020020 ---------- */
+(function(){
+  const word = 0x1F020020 >>> 0, bits = word.toString(2).padStart(32, "0");
+  const F = [[31,24,"M S 11111","FP 3-source"],[23,22,"type","single"],[21,21,"o1","0"],[20,16,"Rm","s2"],[15,15,"o0","add"],[14,10,"Ra","s0"],[9,5,"Rn","s1"],[4,0,"Rd","s0"]];
+  const row = $("#bitrow");
+  F.forEach(([hi, lo, name, val]) => {
+    const f = document.createElement("div"); f.className = "fld";
+    const bb = document.createElement("div"); bb.className = "bb";
+    for (let b = hi; b >= lo; b--) { const s = document.createElement("s"); const v = bits[31 - b]; s.textContent = v; if (v === "1") s.className = "one"; bb.append(s); }
+    const fl = document.createElement("div"); fl.className = "fl"; fl.innerHTML = "<b></b>"; fl.firstChild.textContent = val; fl.append(name + " · " + (hi === lo ? hi : hi + ":" + lo));
+    f.append(bb, fl); row.append(f);
+  });
+})();
 
-/* ---------- reveal + wafer scroll ---------- */
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
-document.querySelectorAll(".rv").forEach(el => io.observe(el));
+/* ---------- lowering + depth gauge ---------- */
+const lower = $("#lower"), steps = $$("#steps li"), figs = $$("#stage .fig"), depth = $("#depth"), dlinks = $$("#depth a");
+let curStep = -1;
+function setStep(s){
+  if (s === curStep) return; curStep = s;
+  steps.forEach((li, i) => li.classList.toggle("on", i === s));
+  figs.forEach((f, i) => f.classList.toggle("on", i === s));
+}
+if (REDUCE) { steps.forEach(li => li.classList.add("on")); }
+function setDepth(key, dark){
+  dlinks.forEach(a => a.setAttribute("aria-current", String(a.dataset.go === key)));
+  depth.classList.toggle("on-dark", dark);
+}
+function lowerRange(){ const top = lower.offsetTop, h = lower.offsetHeight - innerHeight; return { top, h }; }
+dlinks.forEach(a => a.addEventListener("click", e => {
+  const g = a.dataset.go; if (!/^s\d$/.test(g) || REDUCE) return;
+  e.preventDefault(); const { top, h } = lowerRange(); const s = +g[1];
+  scrollTo({ top: top + h * ((s + 0.5) / 4), behavior: "smooth" });
+}));
+
 let ticking = false;
-function onScroll(){
-  if (ticking || reduce) return; ticking = true;
-  requestAnimationFrame(() => {
-    const h = document.querySelector(".hero").offsetHeight, p = Math.min(1, Math.max(0, window.scrollY / h));
-    wrap.style.transform = `translateY(${p * 60}px) scale(${1 + p * 0.35}) rotate(${p * -8}deg)`;
-    wrap.style.opacity = String(1 - p * 0.75);
-    ticking = false;
-  });
+function frame(){
+  ticking = false;
+  const y = scrollY, vh = innerHeight;
+  // hero
+  const hero = $("#top"); const hp = clamp(y / Math.max(1, hero.offsetHeight - vh));
+  if (!REDUCE) heroProgress(hp);
+  // lowering
+  const { top, h } = lowerRange(); const lp = clamp((y - top) / Math.max(1, h));
+  if (!REDUCE) { lower.style.setProperty("--t", (lp * 0.98).toFixed(3)); setStep(Math.min(3, Math.floor(lp * 4))); }
+  // depth gauge
+  const brewTop = $("#brew").offsetTop, workTop = $("#work").offsetTop;
+  let key = "top", dark = false;
+  if (y + vh * 0.5 >= brewTop) { key = "brew"; dark = true; }
+  else if (y + vh * 0.5 >= top) { key = "s" + Math.min(3, Math.floor(lp * 4)); dark = lp > 0.4; }
+  else if (y + vh * 0.5 >= workTop) key = "work";
+  setDepth(key, dark);
 }
-addEventListener("scroll", onScroll, { passive: true });
+addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+addEventListener("resize", () => requestAnimationFrame(frame));
+if (REDUCE) heroProgress(0);
+setStep(0); frame();
 
-let rT; function layout(){ drawWafer(); drawBand(); drawPinTraces(); }
-addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(layout, 120); });
-layout();
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawPinTraces);
+/* ---------- field visualisations (canvas 2D) ---------- */
+const css = getComputedStyle(document.documentElement);
+const C = { ink: css.getPropertyValue("--ink").trim(), muted: css.getPropertyValue("--muted").trim(), rule: css.getPropertyValue("--rule").trim(), heat: css.getPropertyValue("--heat").trim(), heatInk: css.getPropertyValue("--heat-ink").trim(), bg: css.getPropertyValue("--paper-2").trim() };
+const MONO = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+
+const VIZ = {
+  er(g, w, h, t, st){ // entity resolution: candidate threads, pruned decoys, matched pairs
+    if (!st.init) {
+      const L = ["Sri Lakshmi Traders","Acme Steel Pvt Ltd","Kaveri Agro Exports","Blue Lotus Pharma","Nandi Textiles","Coromandel Logistics","Vel Tech Castings"];
+      const R = ["SRI LAKSHMI TRDRS","ACME STEEL PRIVATE LTD","Kaveri Agro Exp.","Bluelotus Pharmaceuticals","Nandhi Textile Mills","Coromandel Logistic Svcs","Veltech Casting Works"];
+      const order = [3,0,5,1,6,2,4]; st.L = L; st.R = order.map(i => R[i]); st.match = L.map((_, i) => order.indexOf(i)); st.init = true;
+    }
+    const n = st.L.length, pad = h * 0.1, rowH = (h - pad * 2) / n, fs = Math.max(10, Math.min(14, w / 42));
+    g.font = `500 ${fs}px ${MONO}`; g.textBaseline = "middle";
+    const lx = w * 0.06, rx = w * 0.94, lEdge = w * 0.41, rEdge = w * 0.59;
+    const cyc = 9.5, ph = (t % cyc) / cyc, k = ph * (n + 1.2);
+    for (let i = 0; i < n; i++) {
+      const ly = pad + rowH * (i + .5), j = st.match[i], ry = pad + rowH * (j + .5);
+      const prog = clamp(k - i), matched = prog >= 1;
+      // decoy candidate (pruned)
+      const dj = (j + 2) % n, dy = pad + rowH * (dj + .5), dp = clamp((k - i + 0.6) * 1.4);
+      if (dp > 0 && dp < 1.4) { g.strokeStyle = C.muted; g.globalAlpha = (1 - clamp(dp - .4)) * .5; g.setLineDash([3, 4]); g.lineWidth = 1;
+        g.beginPath(); g.moveTo(lEdge, ly); g.bezierCurveTo(w * .5, ly, w * .5, dy, rEdge, dy); g.stroke(); g.setLineDash([]); g.globalAlpha = 1; }
+      if (prog > 0) { g.strokeStyle = matched ? C.heatInk : C.ink; g.lineWidth = matched ? 2 : 1.2; g.beginPath();
+        const steps = 24; for (let s = 0; s <= steps * prog; s++) { const u = s / steps, x = lEdge + (rEdge - lEdge) * u, e = u * u * (3 - 2 * u), y = ly + (ry - ly) * e; s ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); }
+      g.fillStyle = matched ? C.ink : C.muted; g.textAlign = "left"; g.fillText(st.L[i], lx, ly);
+      g.fillStyle = clamp(k - st.match.indexOf(i)) >= 1 ? C.ink : C.muted; g.textAlign = "right"; g.fillText(st.R[i], rx, pad + rowH * (i + .5));
+      g.fillStyle = matched ? C.heatInk : C.rule; g.beginPath(); g.arc(lEdge, ly, 3, 0, 7); g.fill(); g.beginPath(); g.arc(rEdge, ry, 3, 0, 7); g.fill();
+    }
+  },
+  mem(g, w, h, t, st){ // knowledge base: edits, deletions, rejected corruption
+    const rows = [["ceo(Northwind)","A. Rao","M. Iyer","edit"],["hq(Northwind)","Pune","","delete"],["price(SKU-42)","₹1,290","₹1,2#0","corrupt"],["status(order 88)","packed","shipped","edit"],["founded(Northwind)","2011","",""],["owner(repo-b)","team-b","","delete"]];
+    const fs = Math.max(10, Math.min(14, w / 40)), pad = w * .07, rh = (h * .72) / rows.length, top = h * .1;
+    g.font = `500 ${fs}px ${MONO}`; g.textBaseline = "middle";
+    const cyc = 2.6, idx = Math.floor(t / cyc) % rows.length, ph = (t % cyc) / cyc;
+    rows.forEach((r, i) => {
+      const y = top + rh * (i + .5), active = i === idx, stage = active ? ph : (i < idx ? 1 : 0);
+      if (active) { g.fillStyle = "rgba(255,122,46,.10)"; g.fillRect(pad - 10, y - rh / 2 + 2, w - pad * 2 + 20, rh - 4); }
+      g.textAlign = "left"; g.fillStyle = C.muted; g.fillText(r[0], pad, y);
+      const vx = w * .58; g.fillStyle = C.ink;
+      if (r[3] === "edit" && stage > .45) { g.fillStyle = C.muted; g.fillText(r[1], vx, y); const tw = g.measureText(r[1]).width; g.fillRect(vx, y, tw, 1.4); g.fillStyle = C.heatInk; g.fillText(r[2], vx + tw + 12, y); }
+      else if (r[3] === "delete" && stage > .45) { g.fillStyle = C.muted; g.fillText("⌀ deleted", vx, y); }
+      else if (r[3] === "corrupt" && stage > .35) { g.fillStyle = C.heatInk; const glitch = stage < .65 && Math.floor(t * 20) % 2; g.fillText(glitch ? r[2] : r[1], vx, y); g.fillStyle = C.muted; g.textAlign = "right"; g.fillText(stage > .65 ? "rejected" : "", w - pad, y); }
+      else g.fillText(r[1], vx, y);
+    });
+    const r = rows[idx]; const ans = r[3] === "edit" ? r[2] : r[3] === "delete" ? "not in the record" : r[3] === "corrupt" ? "record rejected" : r[1];
+    g.textAlign = "left"; g.fillStyle = C.ink; g.fillText("› " + r[0] + "?", pad, h * .88);
+    if (ph > .55) { g.fillStyle = C.heatInk; g.fillText("= " + ans, pad + g.measureText("› " + r[0] + "?  ").width, h * .88); }
+  },
+  sar(g, w, h, t, st){ // speckled radar backscatter; a scan line reveals the post-event image
+    if (!st.init || st.w !== w) {
+      const W = 160, H = 120, mk = (after) => { const cv = document.createElement("canvas"); cv.width = W; cv.height = H; const c = cv.getContext("2d"); const im = c.createImageData(W, H); const r = rng(after ? 7 : 3);
+        for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+          let base = .32 + .08 * Math.sin(x * .05) * Math.cos(y * .07);
+          if (Math.abs(y - (40 + x * .18)) < 5) base = .06;                                  // river
+          const site = x > 86 && x < 128 && y > 58 && y < 92;
+          if (site && ((x + y) % 9 < 5)) base = after ? .12 : .85;                         // buildings
+          if (!site && x % 23 < 3 && y % 17 < 10) base = .7;
+          const speckle = (-Math.log(1 - r() * .999) - Math.log(1 - r() * .999)) / 2;     // 2-look multiplicative speckle
+          let v = clamp(base * speckle * .95);
+          if (after && site) v *= .55;                                                        // backscatter loss after the event
+          const i = (y * W + x) * 4, gv = 46 + v * 150; im.data[i] = gv; im.data[i + 1] = gv + 2; im.data[i + 2] = gv + 8; im.data[i + 3] = 255; }
+        c.putImageData(im, 0, 0); return cv; };
+      st.before = mk(false); st.after = mk(true); st.init = true; st.w = w;
+    }
+    g.imageSmoothingEnabled = false;
+    const sy = ((t * .12) % 1.25) * h;
+    g.drawImage(st.before, 0, 0, w, h);
+    g.save(); g.beginPath(); g.rect(0, 0, w, Math.min(sy, h)); g.clip(); g.drawImage(st.after, 0, 0, w, h); g.restore();
+    g.fillStyle = C.heat; g.fillRect(0, sy - 1, w, 2);
+    const sx = w * 86 / 160, syy = h * 58 / 120, sw = w * 42 / 160, sh = h * 34 / 120;
+    g.strokeStyle = sy > syy + sh ? C.heat : "rgba(255,255,255,.7)"; g.lineWidth = 1.5; g.setLineDash([5, 4]); g.strokeRect(sx, syy, sw, sh); g.setLineDash([]);
+    const done = sy > syy + sh, label = done ? "Δσ⁰ −8.4 dB · damage likely" : "site footprint";
+    g.font = `500 ${Math.max(10, w / 46)}px ${MONO}`; g.textBaseline = "middle"; g.textAlign = "left";
+    const tw = g.measureText(label).width, lh = Math.max(20, w / 26), lx = Math.min(sx, w - tw - 22), ly = syy - lh - 6;
+    g.fillStyle = done ? C.heat : "rgba(10,12,14,.82)"; g.fillRect(lx, ly, tw + 16, lh);
+    g.fillStyle = done ? "#1a0a02" : "#fff"; g.fillText(label, lx + 8, ly + lh / 2 + 1);
+  },
+  glu(g, w, h, t, st){ // glucose history + quantile forecast fan, 70–180 mg/dL target range
+    const L = w * .1, R = w * .95, T = h * .1, B = h * .82, ymin = 40, ymax = 260;
+    const Y = v => B - (v - ymin) / (ymax - ymin) * (B - T);
+    const f = x => 118 + 38 * Math.sin(x * .9) + 52 * Math.exp(-Math.pow((x % 6.3) - 2.1, 2) * 2.2) + 9 * Math.sin(x * 3.1);
+    g.fillStyle = "rgba(18,20,23,.05)"; g.fillRect(L, Y(180), R - L, Y(70) - Y(180));
+    g.font = `500 ${Math.max(9.5, w / 52)}px ${MONO}`; g.fillStyle = C.muted; g.textAlign = "right"; g.textBaseline = "middle";
+    [70, 180, 250].forEach(v => { g.fillText(v, L - 8, Y(v)); g.fillStyle = C.rule; g.fillRect(L, Y(v), R - L, 1); g.fillStyle = C.muted; });
+    const now = L + (R - L) * .66, off = t * .35;
+    g.strokeStyle = C.ink; g.lineWidth = 1.8; g.beginPath();
+    for (let x = L; x <= now; x += 2) { const v = f((x - L) / (R - L) * 8 + off); x === L ? g.moveTo(x, Y(v)) : g.lineTo(x, Y(v)); } g.stroke();
+    const v0 = f((now - L) / (R - L) * 8 + off);
+    g.beginPath();
+    for (let x = now; x <= R; x += 2) { const u = (x - now) / (R - now), m = v0 + (f((x - L) / (R - L) * 8 + off) - v0) * .7; g.lineTo(x, Y(m + 6 + u * 46)); }
+    for (let x = R; x >= now; x -= 2) { const u = (x - now) / (R - now), m = v0 + (f((x - L) / (R - L) * 8 + off) - v0) * .7; g.lineTo(x, Y(m - 6 - u * 40)); }
+    g.closePath(); g.fillStyle = "rgba(255,122,46,.22)"; g.fill();
+    g.setLineDash([5, 4]); g.strokeStyle = C.heatInk; g.lineWidth = 1.6; g.beginPath();
+    for (let x = now; x <= R; x += 2) { const m = v0 + (f((x - L) / (R - L) * 8 + off) - v0) * .7; x === now ? g.moveTo(x, Y(m)) : g.lineTo(x, Y(m)); } g.stroke(); g.setLineDash([]);
+    g.fillStyle = C.ink; g.fillRect(now, T, 1, B - T); g.textAlign = "left"; g.textBaseline = "top"; g.fillText("now", now + 6, T);
+    g.fillStyle = C.heatInk; g.fillText("P10–P90", now + 6, T + 16);
+    g.fillStyle = C.muted; g.fillText("mg/dL", L, h * .87);
+  },
+  ppg(g, w, h, t, st){ // photoplethysmography pulse wave; rate drifts, readouts follow
+    const bpm = 68 + 14 * Math.sin(t * .18) + 4 * Math.sin(t * .7), per = 60 / bpm;
+    const wave = u => { u = u % 1; return Math.exp(-Math.pow((u - .18) / .07, 2)) + .38 * Math.exp(-Math.pow((u - .42) / .09, 2)) - .08 * Math.exp(-Math.pow((u - .33) / .03, 2)); };
+    const mid = h * .45, amp = h * .22, span = 4.2;
+    g.strokeStyle = C.rule; g.lineWidth = 1; for (let i = 1; i < 6; i++) { g.beginPath(); g.moveTo(0, h * i / 6); g.lineTo(w, h * i / 6); g.stroke(); }
+    g.strokeStyle = C.heatInk; g.lineWidth = 2.2; g.beginPath();
+    for (let x = 0; x <= w; x += 2) { const ts = t - span + (x / w) * span, y = mid - wave(ts / per) * amp; x ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke();
+    const hx = w - 2, hy = mid - wave(t / per) * amp; g.fillStyle = C.heat; g.beginPath(); g.arc(hx, hy, 4, 0, 7); g.fill();
+    const hrv = Math.round(46 - (bpm - 68) * 1.1), stress = bpm > 78 ? "elevated" : "calm";
+    g.font = `600 ${Math.max(16, w / 18)}px ${MONO}`; g.fillStyle = C.ink; g.textAlign = "left"; g.textBaseline = "alphabetic";
+    g.fillText(Math.round(bpm) + " bpm", w * .06, h * .88);
+    g.font = `500 ${Math.max(10, w / 44)}px ${MONO}`; g.fillStyle = C.muted;
+    g.fillText("HRV " + hrv + " ms · stress " + stress, w * .06, h * .95);
+    g.textAlign = "right"; g.fillStyle = stress === "calm" ? C.muted : C.heatInk;
+    g.fillText(stress === "calm" ? "explain: in depth" : "explain: short, steady", w * .94, h * .95);
+  }
+};
+function startViz(cv){
+  const kind = cv.dataset.viz, fn = VIZ[kind]; if (!fn) return;
+  const g = cv.getContext("2d"), st = {}; let w = 0, h = 0, raf = 0, on = false, t0 = performance.now() - Math.random() * 4000;
+  const size = () => { const r = cv.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); w = r.width; h = r.height; cv.width = Math.round(w * d); cv.height = Math.round(h * d); g.setTransform(d, 0, 0, d, 0, 0); };
+  const draw = now => { g.clearRect(0, 0, w, h); fn(g, w, h, (now - t0) / 1000, st); if (on && !REDUCE) raf = requestAnimationFrame(draw); };
+  size(); draw(performance.now() + 5200);
+  new ResizeObserver(() => { size(); draw(performance.now()); }).observe(cv);
+  new IntersectionObserver(([e]) => { on = e.isIntersecting; cancelAnimationFrame(raf); if (on && !REDUCE) raf = requestAnimationFrame(draw); }).observe(cv);
+}
+$$("canvas[data-viz]").forEach(startViz);
+
+/* ---------- molten silicon (WebGL) ---------- */
+(function(){
+  const cv = $("#melt"); const gl = cv.getContext("webgl", { antialias: false, premultipliedAlpha: false });
+  if (!gl) { cv.remove(); return; }
+  const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+  const fs = `precision highp float;uniform vec2 r;uniform float t;
+  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+  float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}
+  vec3 heat(float x){x=clamp(x,0.,1.5);return vec3(smoothstep(.0,.38,x),smoothstep(.3,.95,x)*.78,smoothstep(.85,1.4,x)*.7);}
+  void main(){
+    float asp=r.x/r.y;
+    float sx=asp>1.15?asp*.5-max(.46,asp*.2):0.;             // scene sits right of the heading on wide screens
+    vec2 uv=(gl_FragCoord.xy-vec2(.5*r.x,0.))/r.y; uv.x-=sx;   // x centred on the scene, y from bottom
+    vec3 col=vec3(.010,.011,.014);
+    float cy=asp>1.15?.27:.22, ax=asp>1.15?.42:min(.42,.44*asp), ay=ax*.19;
+    vec2 m=uv-vec2(0.,cy);
+    float e=length(m/vec2(ax,ay));
+    // furnace glow
+    col+=vec3(1.,.32,.07)*.22*exp(-length(m*vec2(1.3,2.8))*2.2);
+    // crucible: dark quartz wall with a lit lip
+    float bowl=length(vec2(uv.x/(ax*1.04),(uv.y-cy+.02)/(ax*.55)));
+    if(uv.y<cy&&bowl<1.){
+      float d=(cy-uv.y)/(ax*.55);
+      col=mix(col,vec3(.16,.05,.015)*(1.-d*.85)+vec3(.9,.3,.06)*.12*exp(-d*7.),.95);
+      col+=vec3(1.,.4,.1)*.35*exp(-pow((bowl-.985)*60.,2.));
+    }
+    // molten surface: convection cells with bright veins
+    if(e<1.){
+      vec2 sp=m/vec2(ax,ay); float rr=length(sp);
+      float ang=atan(sp.y,sp.x)+t*.06+(1.-rr)*.9;
+      vec2 q=vec2(cos(ang),sin(ang))*rr*2.4;
+      float f=fbm(q*1.2+fbm(q*1.6-t*.05)*1.7+vec2(0.,t*.025));
+      float v=pow(1.-abs(2.*fbm(q*2.1+vec2(t*.04,0.))-1.),7.);
+      float temp=.5+.55*f+.45*v-rr*.28;
+      vec3 c=heat(temp)*1.15;
+      c*=mix(1.,.5,smoothstep(.7,1.,e));
+      col=mix(col,c,smoothstep(1.,.96,e));
+      col+=vec3(1.,.55,.2)*.5*exp(-pow((e-.985)*70.,2.));     // lip glow
+    }
+    // crystal: body, shoulder, neck; seed rod fades up into the dark
+    float y0=cy+.01, w0=ax*.2, bodyTop=cy+ax*.62, coneTop=bodyTop+ax*.26;
+    float hw=0.;
+    if(uv.y>y0&&uv.y<bodyTop) hw=w0;
+    else if(uv.y>=bodyTop&&uv.y<coneTop) hw=mix(w0,.005,smoothstep(bodyTop,coneTop,uv.y));
+    else if(uv.y>=coneTop) hw=.004;
+    hw*=1.+.004*sin(uv.y*160.);
+    float fade=smoothstep(coneTop+.34,coneTop+.02,uv.y);
+    if(hw>0.&&abs(uv.x)<hw){
+      float u=uv.x/hw, c=sqrt(max(0.,1.-u*u));
+      float spin=.5+.5*sin(u*2.6+t*1.25);
+      vec3 metal=vec3(.27,.30,.35)*(.2+.8*c)*(.6+.4*spin);
+      metal+=vec3(.85,.9,1.)*pow(max(0.,1.-abs(u-.42)*2.2),10.)*.45*(.7+.3*spin);
+      float glow=exp(-(uv.y-y0)*12.);
+      metal+=vec3(1.,.42,.1)*glow*(.55+.45*c);
+      float edge=smoothstep(1.,.96,abs(u));
+      col=mix(col,metal,edge*fade);
+    }
+    // meniscus where crystal meets melt
+    float men=exp(-pow((length(vec2(uv.x/(w0*1.18),(uv.y-y0)/(ay*.22)))-1.)*7.,2.));
+    col+=vec3(1.,.78,.5)*men*.85;
+    // rising heat shimmer
+    float sh=fbm(vec2(uv.x*6.,uv.y*3.-t*.4))*smoothstep(cy+.55,cy,uv.y)*smoothstep(cy-.02,cy+.04,uv.y);
+    col+=vec3(1.,.4,.1)*sh*.05;
+    col=col/(1.+col*.55); col=pow(col,vec3(.9));
+    gl_FragColor=vec4(col,1.);
+  }`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+  if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { cv.remove(); return; }
+  gl.useProgram(pr);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const uR = gl.getUniformLocation(pr, "r"), uT = gl.getUniformLocation(pr, "t");
+  let on = false, raf = 0; const t0 = performance.now();
+  const size = () => { const d = Math.min(1.5, devicePixelRatio || 1), r = cv.getBoundingClientRect(); cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); gl.viewport(0, 0, cv.width, cv.height); };
+  const draw = now => { gl.uniform2f(uR, cv.width, cv.height); gl.uniform1f(uT, REDUCE ? 8 : (now - t0) / 1000); gl.drawArrays(gl.TRIANGLES, 0, 3); if (on && !REDUCE) raf = requestAnimationFrame(draw); };
+  size(); draw(performance.now());
+  new ResizeObserver(() => { size(); draw(performance.now()); }).observe(cv);
+  new IntersectionObserver(([e]) => { on = e.isIntersecting; cancelAnimationFrame(raf); if (on && !REDUCE) raf = requestAnimationFrame(draw); }).observe(cv);
+})();
+})();
 </script>
 </body>
 </html>
