@@ -42,7 +42,7 @@ a{color:inherit}
 .mark{display:inline-flex;align-items:center;gap:10px;text-decoration:none;min-height:44px;font:700 15px var(--display);font-variation-settings:"wdth" 125;letter-spacing:.04em}
 .mark svg{width:30px;height:30px}
 .nav nav{display:flex;gap:4px;margin-left:auto}
-.nav nav a{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--silk-dim);padding:14px 12px;border-radius:4px;transition:color .15s}
+.nav nav a{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--silk-dim);padding:14px 12px;border-radius:4px;transition:color .15s var(--ease-out)}
 .nav nav a:hover{color:var(--silk)}
 .rev{border:1px solid var(--line-2);padding:4px 8px;border-radius:3px}
 @media (max-width:640px){.rev{display:none}.nav nav a{padding:14px 8px}}
@@ -68,7 +68,6 @@ h1 span:last-child{padding-left:.42em;color:var(--mask);-webkit-text-stroke:2px 
 #wafer{width:100%;height:100%;display:block}
 .sheen{position:absolute;inset:2%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.55;
   background:conic-gradient(from 0deg,transparent 0 8%,rgba(255,255,255,.16) 14%,transparent 22% 40%,rgba(120,210,255,.14) 48%,transparent 56% 70%,rgba(255,200,120,.16) 78%,transparent 86%)}
-@media (prefers-reduced-motion:no-preference){.sheen{animation:spin 48s linear infinite}}
 @keyframes spin{to{transform:rotate(1turn)}}
 @media (max-width:860px){
   .hero{padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
@@ -82,7 +81,6 @@ h1 span:last-child{padding-left:.42em;color:var(--mask);-webkit-text-stroke:2px 
 .trace{fill:none;stroke:var(--line-2);stroke-width:2;stroke-linejoin:round}
 .trace.gold{stroke:rgba(214,168,78,.38)}
 .pulse{fill:none;stroke:var(--gold);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:18 var(--len);stroke-dashoffset:calc(var(--len) + 18px);opacity:0}
-@media (prefers-reduced-motion:no-preference){.pulse{opacity:1;animation:run var(--dur,4s) linear var(--delay,0s) infinite}}
 @keyframes run{from{stroke-dashoffset:calc(var(--len) + 18px)}to{stroke-dashoffset:0}}
 .via{fill:var(--mask);stroke:var(--gold);stroke-width:2}
 .pad{fill:var(--gold);opacity:.85}
@@ -90,19 +88,22 @@ h1 span:last-child{padding-left:.42em;color:var(--mask);-webkit-text-stroke:2px 
 /* section heads */
 section{position:relative}
 .sec{padding-block:104px}
+#work{padding-top:64px}
+#brewing{padding-block:136px 120px}
 .sec-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px 24px;margin-bottom:48px;border-bottom:1px solid var(--line);padding-bottom:18px}
 h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:clamp(40px,6vw,84px);line-height:.9;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
 .sec-head p{margin:0;color:var(--silk-dim);max-width:36ch;font-size:15px}
 @media (max-width:640px){.sec{padding-block:76px}.sec-head{grid-template-columns:minmax(0,1fr)}}
 
 /* selected work: packaged parts */
-.parts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:40px 36px}
-.part{grid-column:span 3;min-width:0}
-.part.sm{grid-column:span 2}
-@media (max-width:1000px){.part,.part.sm{grid-column:span 3}.part:last-child{grid-column:span 6}}
-@media (max-width:700px){.parts{grid-template-columns:minmax(0,1fr);gap:36px}.part,.part.sm,.part:last-child{grid-column:auto}}
-.pkg{position:relative;margin:0 12px;background:linear-gradient(180deg,#161a18,#111412);border:1px solid var(--line-2);border-radius:6px;padding:14px 14px 16px;transition:border-color .25s}
-.pkg::before,.pkg::after{content:"";position:absolute;top:28px;bottom:28px;width:11px;opacity:.55;transition:opacity .25s,filter .25s;
+.parts{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 40px}
+.part{min-width:0}
+.part.w7{grid-column:span 7}.part.w5{grid-column:span 5}
+.part.wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center}
+.part.wide .part-body{padding-top:0}
+@media (max-width:900px){.parts{grid-template-columns:minmax(0,1fr);gap:44px}.part.w7,.part.w5{grid-column:auto}.part.wide{display:block}.part.wide .part-body{padding-top:22px}}
+.pkg{position:relative;margin:0 12px;background:linear-gradient(180deg,#161a18,#111412);border:1px solid var(--line-2);border-radius:6px;padding:14px 14px 16px;transition:border-color .2s var(--ease-out)}
+.pkg::before,.pkg::after{content:"";position:absolute;top:28px;bottom:28px;width:11px;opacity:.55;transition:opacity .2s var(--ease-out);
   background:repeating-linear-gradient(180deg,var(--gold) 0 5px,transparent 5px 15px)}
 .pkg::before{left:-12px;border-radius:2px 0 0 2px}.pkg::after{right:-12px;border-radius:0 2px 2px 0}
 .part:hover .pkg,.part:focus-within .pkg{border-color:rgba(214,168,78,.55)}
@@ -116,7 +117,7 @@ h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:c
 .part-body{padding:22px 12px 0}
 .field{color:var(--gold);margin:0 0 10px}
 .part h3{margin:0 0 12px;font-weight:780;font-variation-settings:"wdth" 118;font-size:clamp(24px,2.3vw,32px);line-height:1.02;letter-spacing:-.005em;text-wrap:balance}
-.part.sm h3{font-size:clamp(22px,1.8vw,26px)}
+.part.w5 h3{font-size:clamp(24px,2vw,28px)}
 .part p{margin:0 0 18px;color:var(--silk);max-width:60ch;font-size:16px}
 .specs{display:grid;grid-template-columns:auto minmax(0,1fr);margin:0;border-top:1px solid var(--line)}
 .specs dt,.specs dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line)}
@@ -131,15 +132,15 @@ h2{margin:8px 0 0;font-weight:800;font-variation-settings:"wdth" 125;font-size:c
 .scope-top{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line)}
 .scope canvas{display:block;width:100%;aspect-ratio:16/9}
 .scope-read{display:flex;gap:18px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line)}
-.scope-read b{color:var(--gold);font-weight:500}
+.scope-read b{color:var(--silk);font-weight:500}
 .board{position:relative;aspect-ratio:5/4;border:1px solid var(--line-2);border-radius:8px;overflow:hidden;background:#0d110f}
 .board canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
 footer{padding-block:40px calc(env(safe-area-inset-bottom,0px) + 40px)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 footer{border-top:1px solid var(--line);color:var(--silk-dim)}
-footer .gh{color:var(--silk);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;transition:color .15s}
-footer .gh:hover{color:var(--gold)}
+footer .gh{color:var(--silk);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center;transition:text-decoration-color .2s var(--ease-out)}
+footer .gh:hover{text-decoration-color:var(--silk)}
 
 </style>
 </head>
@@ -181,7 +182,7 @@ footer .gh:hover{color:var(--gold)}
         <h2 id="h-work">Selected work</h2>
       </div>
       <div class="parts">
-        <article class="part rv">
+        <article class="part w7 rv">
           <div class="pkg">
             <div class="pkg-top"><span class="silk des">U3</span><span class="silk">Information retrieval</span></div>
             <div class="die-win"><canvas data-viz="er" aria-hidden="true"></canvas></div>
@@ -192,7 +193,7 @@ footer .gh:hover{color:var(--gold)}
             <dl class="specs"><dt>Result</dt><dd>0.985 macro-F0.5 on a competition leaderboard</dd><dt>Stack</dt><dd>Bi-encoders · TF-IDF · LightGBM · XGBoost · LoRA verifier</dd></dl>
           </div>
         </article>
-        <article class="part rv">
+        <article class="part w5 rv">
           <div class="pkg">
             <div class="pkg-top"><span class="silk des">U4</span><span class="silk">Earth observation</span></div>
             <div class="die-win"><canvas data-viz="sar" aria-hidden="true"></canvas></div>
@@ -203,7 +204,7 @@ footer .gh:hover{color:var(--gold)}
             <dl class="specs"><dt>Sensors</dt><dd>Sentinel-1 · NISAR · VIIRS</dd><dt>Stack</dt><dd>Python · Earth Engine · Cloud Run · RFC 8785 hashing</dd></dl>
           </div>
         </article>
-        <article class="part sm rv">
+        <article class="part w5 rv">
           <div class="pkg">
             <div class="pkg-top"><span class="silk des">U5</span><span class="silk">Language-model research</span></div>
             <div class="die-win"><canvas data-viz="mem" aria-hidden="true"></canvas></div>
@@ -214,7 +215,7 @@ footer .gh:hover{color:var(--gold)}
             <dl class="specs"><dt>Stack</dt><dd>PyTorch · LoRA · Qwen2.5 · Kubernetes</dd></dl>
           </div>
         </article>
-        <article class="part sm rv">
+        <article class="part w7 rv">
           <div class="pkg">
             <div class="pkg-top"><span class="silk des">U6</span><span class="silk">Clinical time series</span></div>
             <div class="die-win"><canvas data-viz="glu" aria-hidden="true"></canvas></div>
@@ -225,7 +226,7 @@ footer .gh:hover{color:var(--gold)}
             <dl class="specs"><dt>Stack</dt><dd>PyTorch · TFT · Flask</dd></dl>
           </div>
         </article>
-        <article class="part sm rv">
+        <article class="part wide rv">
           <div class="pkg">
             <div class="pkg-top"><span class="silk des">U7</span><span class="silk">Physiological computing</span></div>
             <div class="die-win"><canvas data-viz="ppg" aria-hidden="true"></canvas></div>
@@ -330,8 +331,6 @@ function drawBand(){
     const y1 = Math.min(H - 10, y0 + drop), d = `M0 ${y0} H${bend} L${bend + (y1 - y0)} ${y1} H${run}`, gold = i % 3 === 1;
     const t = mk("path", { d, class: "trace" + (gold ? " gold" : "") }); svg.appendChild(t);
     svg.appendChild(mk("circle", { cx: run + 5, cy: y1, r: 4.5, class: "via" }));
-    if (gold && !reduce) { const p = mk("path", { d, class: "pulse" }), len = Math.round(t.getTotalLength());
-      p.style.setProperty("--len", len + "px"); p.style.setProperty("--dur", (3.2 + (i % 4) * .7) + "s"); p.style.setProperty("--delay", (-(i * .9)) + "s"); svg.appendChild(p); }
   }
   for (let k = 0; k < Math.floor(W * 0.18 / 16); k++) svg.appendChild(mk("rect", { x: W * 0.8 + k * 16, y: H - 34, width: 9, height: 26, rx: 1, class: "pad" }));
 }
@@ -341,8 +340,8 @@ function rng(seed){ let s = seed >>> 0; return () => ((s = (s * 1664525 + 101390
 const VIZ = {
   er(g, w, h, t, st){
     if (!st.init) {
-      st.L = ["Sri Lakshmi Traders","Acme Steel Pvt Ltd","Kaveri Agro Exports","Blue Lotus Pharma","Nandi Textiles","Coromandel Logistics","Vel Tech Castings"];
-      const R = ["SRI LAKSHMI TRDRS","ACME STEEL PRIVATE LTD","Kaveri Agro Exp.","Bluelotus Pharmaceuticals","Nandhi Textile Mills","Coromandel Logistic Svcs","Veltech Casting Works"];
+      st.L = ["Sri Lakshmi Traders","Hosur Forgings Pvt Ltd","Kaveri Agro Exports","Blue Lotus Pharma","Nandi Textiles","Coromandel Logistics","Vel Tech Castings"];
+      const R = ["SRI LAKSHMI TRDRS","HOSUR FORGINGS PRIVATE LTD","Kaveri Agro Exp.","Bluelotus Pharmaceuticals","Nandhi Textile Mills","Coromandel Logistic Svcs","Veltech Casting Works"];
       const order = [3,0,5,1,6,2,4]; st.R = order.map(i => R[i]); st.match = st.L.map((_, i) => order.indexOf(i)); st.init = true;
     }
     const n = 7, pad = h * .1, rowH = (h - pad * 2) / n, fs = Math.max(9.5, Math.min(13, w / 46));
@@ -362,7 +361,7 @@ const VIZ = {
     }
   },
   mem(g, w, h, t){
-    const rows = [["ceo(Northwind)","A. Rao","M. Iyer","edit"],["hq(Northwind)","Pune","","delete"],["price(SKU-42)","₹1,290","₹1,2#0","corrupt"],["status(#88)","packed","shipped","edit"],["founded","2011","",""]];
+    const rows = [["ceo(Malnad Coffee)","A. Rao","M. Iyer","edit"],["hq(Malnad Coffee)","Pune","","delete"],["price(SKU-42)","₹1,290","₹1,2#0","corrupt"],["status(#88)","packed","shipped","edit"],["founded","2011","",""]];
     const fs = Math.max(9.5, Math.min(13, w / 34)), pad = w * .07, rh = (h * .66) / rows.length, top = h * .08;
     g.font = `500 ${fs}px ${MONO}`; g.textBaseline = "middle";
     const idx = Math.floor(t / 2.6) % rows.length, ph = (t % 2.6) / 2.6;
@@ -400,7 +399,7 @@ const VIZ = {
     g.fillStyle = C.gold; g.fillRect(0, sy - 1, w, 2);
     const sx = w * 96 / 176, syy = h * 52 / 110, sw = w * 46 / 176, sh = h * 34 / 110, done = sy > syy + sh;
     g.strokeStyle = done ? C.gold : "rgba(236,231,218,.7)"; g.lineWidth = 1.4; g.setLineDash([5, 4]); g.strokeRect(sx, syy, sw, sh); g.setLineDash([]);
-    const label = done ? "Δσ⁰ −8.4 dB · damage likely" : "site footprint";
+    const label = done ? "backscatter drop · likely damage" : "site footprint";
     g.font = `500 ${Math.max(9.5, w / 52)}px ${MONO}`; g.textBaseline = "middle"; g.textAlign = "left";
     const tw = g.measureText(label).width, lh = Math.max(18, w / 30), lx = Math.min(sx, w - tw - 20), ly = syy - lh - 6;
     g.fillStyle = done ? C.gold : "rgba(8,10,9,.85)"; g.fillRect(lx, ly, tw + 14, lh);
@@ -436,14 +435,26 @@ const VIZ = {
   }
 };
 function animate(cv, draw, opts = {}){
-  const g = cv.getContext("2d"), st = {}; let w = 0, h = 0, raf = 0, on = false; const t0 = performance.now() - (opts.offset || 0);
+  const g = cv.getContext("2d"), st = {}, still = opts.still || 5200, host = opts.hover || null;
+  let w = 0, h = 0, raf = 0, t0 = 0, mode = "", last = still;
   const size = () => { const r = cv.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); w = r.width; h = r.height; if (!w) return; cv.width = Math.round(w * d); cv.height = Math.round(h * d); g.setTransform(d, 0, 0, d, 0, 0); };
-  const frame = now => { if (!w) return; g.clearRect(0, 0, w, h); draw(g, w, h, (now - t0) / 1000, st); if (on && !reduce) raf = requestAnimationFrame(frame); };
-  size(); frame(performance.now() + (opts.still || 5200));
-  new ResizeObserver(() => { size(); frame(performance.now() + (reduce ? (opts.still || 5200) : 0)); }).observe(cv);
-  new IntersectionObserver(([e]) => { on = e.isIntersecting; cancelAnimationFrame(raf); if (on && !reduce) raf = requestAnimationFrame(frame); }).observe(cv);
+  const paint = ms => { last = ms; if (!w) return; g.clearRect(0, 0, w, h); draw(g, w, h, ms / 1000, st); };
+  const tick = now => { const ms = now - t0; if (mode === "once" && ms >= still) { paint(still); mode = ""; return; } paint(ms); raf = requestAnimationFrame(tick); };
+  const run = (m, from) => { if (reduce) return; cancelAnimationFrame(raf); mode = m; t0 = performance.now() - from; raf = requestAnimationFrame(tick); };
+  const stop = () => { cancelAnimationFrame(raf); mode = ""; };
+  size(); paint(still);
+  new ResizeObserver(() => { size(); paint(last); }).observe(cv);
+  const io = new IntersectionObserver(([e]) => {
+    if (opts.loop) { e.isIntersecting ? run("loop", performance.now()) : stop(); return; }   // shared wall clock keeps profile and board in sync
+    if (e.isIntersecting) { run("once", 0); io.disconnect(); }
+  }, { threshold: .35 });
+  io.observe(cv);
+  if (host) {
+    host.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") run("hover", last); });
+    host.addEventListener("pointerleave", () => { if (mode === "hover") stop(); });
+  }
 }
-document.querySelectorAll("canvas[data-viz]").forEach(cvs => animate(cvs, VIZ[cvs.dataset.viz], { offset: Math.random() * 4000 }));
+document.querySelectorAll("canvas[data-viz]").forEach(c => animate(c, VIZ[c.dataset.viz], { hover: c.closest(".part") }));
 
 /* ---------- brewing: stencil print, then reflow, shared clock ---------- */
 const CYCLE = 11;                       // s: 0-2.4 stencil print, 2.4-9.6 reflow profile (0-300 s), 9.6-11 hold
@@ -542,7 +553,7 @@ function drawBoard(g, w, h, t, st){
     g.strokeStyle = "rgba(236,231,218,.55)"; g.lineWidth = 1; g.setLineDash(pt.small ? [] : [3, 3]); g.strokeRect(pt.x, pt.y, pt.w, pt.h); g.setLineDash([]);
     if (!pt.small) { g.fillStyle = "rgba(236,231,218,.8)"; g.beginPath(); g.arc(pt.x - 2 * u, pt.y - 2 * u, .7 * u, 0, 7); g.fill(); }
     g.fillStyle = C.ink; g.textAlign = "left"; g.textBaseline = "bottom"; g.fillText(pt.d, pt.x, pt.y - 1.5 * u);
-    if (!pt.small) { g.fillStyle = C.led; g.textAlign = "right"; g.fillText("DNP", pt.x + pt.w, pt.y - 1.5 * u); }
+    if (!pt.small) { g.fillStyle = C.muted; g.textAlign = "right"; g.fillText("DNP", pt.x + pt.w, pt.y - 1.5 * u); }
   });
   // ghost of a part being placed during inspection
   if (ph.stage === "hold") { const p = st.parts[1], a = Math.sin(ph.p * Math.PI);
@@ -552,8 +563,8 @@ function drawBoard(g, w, h, t, st){
   // fiducials
   [[.95,.07],[.05,.93]].forEach(([fx, fy]) => { g.strokeStyle = C.copper; g.lineWidth = 1.2; g.beginPath(); g.arc(w * fx, h * fy, 2.4 * u, 0, 7); g.stroke(); g.fillStyle = C.copper; g.beginPath(); g.arc(w * fx, h * fy, 1 * u, 0, 7); g.fill(); });
 }
-animate(document.getElementById("profile"), drawProfile, { still: 7600 });
-animate(document.getElementById("board"), drawBoard, { still: 7600 });
+animate(document.getElementById("profile"), drawProfile, { still: 7600, loop: true });
+animate(document.getElementById("board"), drawBoard, { still: 7600, loop: true });
 
 let rT; const layout = () => { drawWafer(); drawBand(); };
 addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(layout, 120); });
